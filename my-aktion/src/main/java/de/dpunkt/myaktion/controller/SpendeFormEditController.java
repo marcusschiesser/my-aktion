@@ -38,4 +38,7 @@ public class SpendeFormEditController implements Serializable {
 		this.bgColor = bgColor;
 	}
 	
+	public String updateUrl() {
+		return Pages.SPENDE_FORM_EDIT;
+	}
 }

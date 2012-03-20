@@ -3,6 +3,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 		<h1>Spendenformular bearbeiten</h1>
@@ -12,31 +13,26 @@
 			<h:panelGrid columns="2">
 
 				<h:outputLabel value="Hintergrundfarbe:"></h:outputLabel>
-				<h:selectOneMenu id="bgColor" 
-					value="#{spendeFormEditController.bgColor}" 
-					>
-					<f:selectItem itemLabel="#FFFFFF" itemValue="FFFFFF" />
-					<f:selectItem itemLabel="#000000" itemValue="000000" />
-					<f:selectItem itemLabel="#FF0000" itemValue="FF0000" />
-					<f:ajax render="url"/>
-				</h:selectOneMenu>
+				<p:colorPicker id="bgColor"
+					value="#{spendeFormEditController.bgColor}" widgetVar="bgPicker">
+				</p:colorPicker>
 
 				<h:outputLabel value="Textfarbe:"></h:outputLabel>
-				<h:selectOneMenu id="textColor" 
+				<p:colorPicker id="textColor" 
 					value="#{spendeFormEditController.textColor}"
-					 >
-					<f:selectItem itemLabel="#FFFFFF" itemValue="FFFFFF" />
-					<f:selectItem itemLabel="#000000" itemValue="000000" />
-					<f:selectItem itemLabel="#FF0000" itemValue="FF0000" />
-					<f:ajax render="url"/>
-				</h:selectOneMenu>
+					widgetVar="textPicker">
+				</p:colorPicker>
 
 				<h:outputLabel value="URL des Formulars:"></h:outputLabel>
 				<h:inputTextarea id="url" rows="6" cols="30" readonly="true"
 					value="#{spendeFormEditController.url}" />
 			</h:panelGrid>
 
+			<h:commandButton value="Update URL" 
+				onclick="updateUrl()" />
 			<h:commandButton value="OK" action="#{spendeFormEditController.doOk}" />
+
+			<p:remoteCommand name="updateUrl" update="url" />
 		</h:form>
 	</ui:define>
 </ui:composition>
