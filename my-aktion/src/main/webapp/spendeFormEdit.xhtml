@@ -24,13 +24,13 @@
 				</p:colorPicker>
 
 				<h:outputLabel value="URL des Formulars:"></h:outputLabel>
-				<h:inputTextarea id="url" rows="6" cols="30" readonly="true"
+				<p:inputTextarea id="url" rows="6" cols="30" readonly="true"
 					value="#{spendeFormEditController.url}" />
 			</h:panelGrid>
 
-			<h:commandButton value="Update URL" 
+			<p:commandButton value="Update URL" 
 				onclick="updateUrl()" />
-			<h:commandButton value="OK" action="#{spendeFormEditController.doOk}" />
+			<p:commandButton value="OK" action="#{spendeFormEditController.doOk}" ajax="false"/>
 
 			<p:remoteCommand name="updateUrl" update="url" />
 		</h:form>

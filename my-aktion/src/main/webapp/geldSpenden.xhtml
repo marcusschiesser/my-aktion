@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<title>Geld Spenden</title>
@@ -23,58 +24,58 @@
 	style="background-color: ##{geldSpendenController.bgColor}; color: ##{geldSpendenController.textColor}">
 	<h1>Geld Spenden</h1>
 
-	<h:messages globalOnly="true" />
+	<p:messages globalOnly="true" />
 	<h:message for="bgColor" style="color: red;" />
 	<h:message for="textColor" style="color: red;" />
 	<h:form>
 
 		<h:panelGrid columns="3">
 			<h:outputLabel value="Name:"></h:outputLabel>
-			<h:inputText id="name"
+			<p:inputText id="name"
 				value="#{geldSpendenController.spende.spenderName}">
 				<f:validateRequired />
-			</h:inputText>
-			<h:message for="name" style="color: red;" />
+			</p:inputText>
+			<p:message for="name" />
 
 			<h:outputLabel value="Konto-Nr.:"></h:outputLabel>
-			<h:inputText id="konto"
+			<p:inputText id="konto"
 				value="#{geldSpendenController.spende.konto.kontoNr}">
 				<f:validateRequired />
-			</h:inputText>
-			<h:message for="konto" style="color: red;" />
+			</p:inputText>
+			<p:message for="konto" />
 
 			<h:outputLabel value="BLZ:"></h:outputLabel>
-			<h:inputText id="blz"
+			<p:inputText id="blz"
 				value="#{geldSpendenController.spende.konto.blz}">
 				<f:validateRequired />
-			</h:inputText>
-			<h:message for="blz" style="color: red;" />
+			</p:inputText>
+			<p:message for="blz" />
 
 			<h:outputLabel value="Name der Bank:"></h:outputLabel>
-			<h:inputText id="name_bank"
+			<p:inputText id="name_bank"
 				value="#{geldSpendenController.spende.konto.nameDerBank}">
 				<f:validateRequired />
-			</h:inputText>
-			<h:message for="name_bank" style="color: red;" />
+			</p:inputText>
+			<p:message for="name_bank" />
 
 			<h:outputLabel value="Spendenbetrag:"></h:outputLabel>
 			<h:panelGroup>
-				<h:inputText id="spendenbetrag"
+				<p:inputText id="spendenbetrag"
 					value="#{geldSpendenController.spende.betrag}">
 					<f:validateRequired />
 					<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
-				</h:inputText> EUR
+				</p:inputText> EUR
 			</h:panelGroup>
-			<h:message for="spendenbetrag" style="color: red;" />
+			<p:message for="spendenbetrag" />
 
 		</h:panelGrid>
 
-		<h:selectBooleanCheckbox
+		<p:selectBooleanCheckbox
 			value="#{geldSpendenController.spende.quittung}" /> Ja, ich möchte eine Spendenquittung
 
 		<br />
 
-		<h:commandButton value="Spenden"
+		<p:commandButton value="Spenden" ajax="false"
 			action="#{geldSpendenController.doSpende}" />
 	</h:form>
 </h:body>
