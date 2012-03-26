@@ -8,13 +8,14 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import de.dpunkt.myaktion.model.Aktion;
+import de.dpunkt.myaktion.util.Events.Added;
 
 @SessionScoped
 @Named
 public class AktionEditController implements Serializable {
 	private static final long serialVersionUID = 2815796004558360299L;
 	
-	@Inject
+	@Inject @Added
 	private Event<Aktion> aktionAddEventSrc;
 
 	public enum Mode {

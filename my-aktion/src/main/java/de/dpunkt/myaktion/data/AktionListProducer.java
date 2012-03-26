@@ -13,11 +13,14 @@ import de.dpunkt.myaktion.model.Aktion;
 import de.dpunkt.myaktion.model.Konto;
 import de.dpunkt.myaktion.model.Spende;
 import de.dpunkt.myaktion.model.Spende.Status;
+import de.dpunkt.myaktion.util.Events.Added;
+import de.dpunkt.myaktion.util.Events.Deleted;
+
 
 @SessionScoped
 @Named
 public class AktionListProducer implements Serializable {
-
+	
 	private static final long serialVersionUID = -182866064791747156L;
 
 	private List<Aktion> aktionen;
@@ -31,8 +34,12 @@ public class AktionListProducer implements Serializable {
 		return aktionen;
 	}
 
-	public void onAktionAdded(@Observes Aktion aktion) {
+	public void onAktionAdded(@Observes @Added Aktion aktion) {
 		getAktionen().add(aktion);
+	}
+	
+	public void onAktionDeleted(@Observes @Deleted Aktion aktion) {
+		getAktionen().remove(aktion);
 	}
 
 	public List<Aktion> createMockAktionen() {

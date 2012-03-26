@@ -3,11 +3,13 @@ package de.dpunkt.myaktion.controller;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import de.dpunkt.myaktion.controller.AktionEditController.Mode;
 import de.dpunkt.myaktion.model.Aktion;
+import de.dpunkt.myaktion.util.Events.Deleted;
 
 @SessionScoped
 @Named
@@ -19,6 +21,9 @@ public class AktionListController implements Serializable {
 
 	@Inject
 	private SpendeListController spendeListController;
+
+	@Inject @Deleted
+	private Event<Aktion> aktionDeleteEventSrc;
 
 	private Aktion aktionToDelete;
 
@@ -46,7 +51,7 @@ public class AktionListController implements Serializable {
 	}
 
 	public void commitDeleteAktion() {
-		System.out.println("Aktion löschen noch nicht implementiert");
+		aktionDeleteEventSrc.fire(aktionToDelete);
 	}
 	
 }
