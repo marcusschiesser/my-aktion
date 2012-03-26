@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Named;
 
 import de.dpunkt.myaktion.model.Aktion;
@@ -28,6 +29,10 @@ public class AktionListProducer implements Serializable {
 
 	public List<Aktion> getAktionen() {
 		return aktionen;
+	}
+
+	public void onAktionAdded(@Observes Aktion aktion) {
+		getAktionen().add(aktion);
 	}
 
 	public List<Aktion> createMockAktionen() {
