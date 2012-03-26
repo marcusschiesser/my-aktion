@@ -3,6 +3,7 @@ package de.dpunkt.myaktion.controller;
 import java.io.Serializable;
 import java.util.logging.Logger;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -19,17 +20,18 @@ public class GeldSpendenController implements Serializable {
 	private String textColor = "000000";
 	private String bgColor = "ffffff";
 	private Spende spende;
-	
+
 	@Inject
 	private FacesContext facesContext;
 
 	@Inject
 	private Logger logger;
-	
-	public GeldSpendenController() {
+
+	@PostConstruct
+	public void init() {
 		this.spende = new Spende();
 	}
-	
+
 	public Spende getSpende() {
 		return spende;
 	}
@@ -55,12 +57,11 @@ public class GeldSpendenController implements Serializable {
 	}
 
 	public String doSpende() {
-		logger.info(spende.getSpenderName() + " hat " + spende.getBetrag() + " Euro gespendet.");
-		facesContext.addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Vielen Dank für die Spende, "
-								+ spende.getSpenderName() + "!", null));
+		logger.info(spende.getSpenderName() + " hat " + spende.getBetrag()
+				+ " Euro gespendet.");
+		facesContext.addMessage(null, new FacesMessage(
+				FacesMessage.SEVERITY_INFO, "Vielen Dank für die Spende, "
+						+ spende.getSpenderName() + "!", null));
 		this.spende = new Spende();
 		return Pages.GELD_SPENDEN;
 	}
