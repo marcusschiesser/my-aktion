@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Alternative;
 
 import de.dpunkt.myaktion.model.Aktion;
 import de.dpunkt.myaktion.model.Konto;
@@ -11,6 +12,7 @@ import de.dpunkt.myaktion.model.Spende;
 import de.dpunkt.myaktion.model.Spende.Status;
 
 @RequestScoped
+@Alternative
 public class MockAktionService implements IAktionService {
 
 	@Override
