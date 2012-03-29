@@ -19,6 +19,7 @@ public class GeldSpendenController implements Serializable {
 
 	private String textColor = "000000";
 	private String bgColor = "ffffff";
+	private Long aktionId;
 	private Spende spende;
 
 	@Inject
@@ -30,6 +31,14 @@ public class GeldSpendenController implements Serializable {
 	@PostConstruct
 	public void init() {
 		this.spende = new Spende();
+	}
+	
+	public Long getAktionId() {
+		return aktionId;
+	}
+
+	public void setAktionId(Long aktionId) {
+		this.aktionId = aktionId;
 	}
 
 	public Spende getSpende() {
@@ -62,7 +71,7 @@ public class GeldSpendenController implements Serializable {
 		facesContext.addMessage(null, new FacesMessage(
 				FacesMessage.SEVERITY_INFO, "Vielen Dank für die Spende, "
 						+ spende.getSpenderName() + "!", null));
-		this.spende = new Spende();
+		init();
 		return Pages.GELD_SPENDEN;
 	}
 
