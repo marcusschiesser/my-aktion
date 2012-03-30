@@ -148,12 +148,6 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.primefaces</groupId>
-			<artifactId>primefaces</artifactId>
-			<version>3.2</version>
-		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -219,6 +213,13 @@
 					<layout>default</layout>
 				</repository>
 			</repositories>
+			<dependencies>
+				<dependency>
+					<groupId>org.primefaces</groupId>
+					<artifactId>primefaces</artifactId>
+					<version>3.2</version>
+				</dependency>
+			</dependencies>
 		</profile>
 
 		<profile>
