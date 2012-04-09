@@ -18,13 +18,7 @@ public class MockAktionService implements IAktionService {
 	@Override
 	public List<Aktion> getAllAktionen() {
 
-		Spende spende1 = new Spende();
-		spende1.setSpenderName("Heinz Schmidt");
-		spende1.setBetrag(20d);
-		spende1.setQuittung(true);
-		spende1.setStatus(Status.UEBERWIESEN);
-		spende1.setKonto(new Konto(spende1.getSpenderName(), "XXX Bank",
-				"123456", "87654321"));
+		Spende spende1 = createMockSpende();
 		Spende spende2 = new Spende();
 		spende2.setSpenderName("Karl Meier");
 		spende2.setBetrag(30d);
@@ -36,13 +30,7 @@ public class MockAktionService implements IAktionService {
 		spenden.add(spende1);
 		spenden.add(spende2);
 
-		Aktion aktion1 = new Aktion();
-		aktion1.setName("Trikots für A-Jugend");
-		aktion1.setSpendenZiel(1000d);
-		aktion1.setBisherGespendet(258d);
-		aktion1.setSpendenBetrag(20d);
-		aktion1.setKonto(new Konto("Max Mustermann", "ABC Bank", "100200300",
-				"12345678"));
+		Aktion aktion1 = createMockAktion();
 		aktion1.setSpenden(spenden);
 
 		Aktion aktion2 = new Aktion();
@@ -77,4 +65,25 @@ public class MockAktionService implements IAktionService {
 		
 	}
 
+	public static Aktion createMockAktion() {
+		Aktion aktion = new Aktion();
+		aktion.setName("Trikots für A-Jugend");
+		aktion.setSpendenZiel(1000d);
+		aktion.setBisherGespendet(258d);
+		aktion.setSpendenBetrag(20d);
+		aktion.setKonto(new Konto("Max Mustermann", "ABC Bank", "100200300",
+				"12345678"));
+		return aktion;
+	}
+	
+	public static Spende createMockSpende() {
+		Spende spende = new Spende();
+		spende.setSpenderName("Heinz Schmidt");
+		spende.setBetrag(20d);
+		spende.setQuittung(true);
+		spende.setStatus(Status.UEBERWIESEN);
+		spende.setKonto(new Konto(spende.getSpenderName(), "XXX Bank",
+				"123456", "87654321"));
+		return spende;
+	}
 }
