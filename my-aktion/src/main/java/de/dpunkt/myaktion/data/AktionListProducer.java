@@ -13,6 +13,7 @@ import de.dpunkt.myaktion.model.Aktion;
 import de.dpunkt.myaktion.services.IAktionService;
 import de.dpunkt.myaktion.util.Events.Added;
 import de.dpunkt.myaktion.util.Events.Deleted;
+import de.dpunkt.myaktion.util.Events.Updated;
 
 @SessionScoped
 @Named
@@ -35,12 +36,20 @@ public class AktionListProducer implements Serializable {
 	}
 
 	public void onAktionAdded(@Observes @Added Aktion aktion) {
-		getAktionen().add(aktion);
+		aktionService.addAktion(aktion);
+		init();
+//		getAktionen().add(aktion);
 	}
 	
 	public void onAktionDeleted(@Observes @Deleted Aktion aktion) {
-		getAktionen().remove(aktion);
+		aktionService.deleteAktion(aktion);
+		init();
+//		getAktionen().remove(aktion);
 	}
 
+	public void onAktionUpdated(@Observes @Updated Aktion aktion) {
+		aktionService.updateAktion(aktion);
+		init();
+	}
 
 }
