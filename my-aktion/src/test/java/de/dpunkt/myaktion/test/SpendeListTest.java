@@ -67,5 +67,21 @@ public class SpendeListTest {
 	   Assert.assertEquals(spendeId, spenden.get(0).getId());
    }
    
+   @Test
+   public void testBisherGespendet() throws Exception {
+	   Aktion aktion = MockAktionService.createMockAktion();
+	   aktionService.addAktion(aktion);	   
+	   // zwei Spenden erstellen (pro Spende 20,-)
+	   spendeService.addSpende(aktion.getId(), MockAktionService.createMockSpende());
+	   spendeService.addSpende(aktion.getId(), MockAktionService.createMockSpende());
+	   List<Aktion> aktionen = aktionService.getAllAktionen();
+	   Aktion managedAktion = null;
+	   for(Aktion a: aktionen) {
+		   if(a.getId()==aktion.getId())
+			   managedAktion = a;
+	   }
+	   Double bisherGespendet = managedAktion.getBisherGespendet();
+	   Assert.assertEquals(new Double(40d), bisherGespendet);
+   }
 
 }

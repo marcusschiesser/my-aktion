@@ -4,18 +4,20 @@ import java.util.List;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Column;
+import javax.persistence.Transient;
 
 @Entity
 public class Aktion {
 	private String name;
 	private Double spendenZiel;
 	private Double spendenBetrag;
+	@Transient
 	private Double bisherGespendet;
 
 	@AttributeOverrides({ @AttributeOverride(name = "name", column = @Column(name = "kontoName")) })
