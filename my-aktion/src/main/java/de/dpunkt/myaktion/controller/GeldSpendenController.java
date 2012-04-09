@@ -11,6 +11,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import de.dpunkt.myaktion.model.Spende;
+import de.dpunkt.myaktion.model.Spende.Status;
+import de.dpunkt.myaktion.services.ISpendeService;
 
 @SessionScoped
 @Named
@@ -28,6 +30,9 @@ public class GeldSpendenController implements Serializable {
 	@Inject
 	private Logger logger;
 
+	@Inject
+	private ISpendeService spendeService;
+	
 	@PostConstruct
 	public void init() {
 		this.spende = new Spende();
@@ -66,11 +71,14 @@ public class GeldSpendenController implements Serializable {
 	}
 
 	public String doSpende() {
+		getSpende().setStatus(Status.IN_BEARBEITUNG);
+		spendeService.addSpende(getAktionId(), getSpende());
 		logger.info(spende.getSpenderName() + " hat " + spende.getBetrag()
 				+ " Euro gespendet.");
-		facesContext.addMessage(null, new FacesMessage(
+		FacesMessage facesMessage = new FacesMessage(
 				FacesMessage.SEVERITY_INFO, "Vielen Dank für die Spende, "
-						+ spende.getSpenderName() + "!", null));
+						+ spende.getSpenderName() + "!", null);
+		facesContext.addMessage(null, facesMessage);
 		init();
 		return Pages.GELD_SPENDEN;
 	}
