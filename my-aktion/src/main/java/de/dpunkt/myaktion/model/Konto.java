@@ -1,5 +1,8 @@
 package de.dpunkt.myaktion.model;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Konto {
 	private String name;
 	private String nameDerBank;
