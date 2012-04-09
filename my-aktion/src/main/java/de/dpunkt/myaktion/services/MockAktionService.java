@@ -59,4 +59,22 @@ public class MockAktionService implements IAktionService {
 		return ret;
 	}
 
+	@Override
+	public void addAktion(Aktion aktion) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteAktion(Aktion aktion) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateAktion(Aktion aktion) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
