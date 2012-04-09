@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
+import de.dpunkt.myaktion.model.Aktion;
+
 @SessionScoped
 @Named
 public class SpendeFormEditController implements Serializable {
@@ -13,13 +15,14 @@ public class SpendeFormEditController implements Serializable {
 
 	private String textColor = "000000";
 	private String bgColor = "ffffff";
-
+	private Aktion aktion;
+	
 	public String doOk() {
 		return Pages.AKTION_LIST;
 	}
 	
 	public String getUrl() {
-		return "http://localhost:8080/my-aktion/geldSpenden.jsf?bgColor=" + bgColor + "&textColor=" + textColor;
+		return "http://localhost:8080/my-aktion/geldSpenden.jsf?bgColor=" + bgColor + "&textColor=" + textColor + "&aktionId=" + aktion.getId();
 	}
 
 	public String getTextColor() {
@@ -41,4 +44,13 @@ public class SpendeFormEditController implements Serializable {
 	public String updateUrl() {
 		return Pages.SPENDE_FORM_EDIT;
 	}
+
+	public Aktion getAktion() {
+		return aktion;
+	}
+
+	public void setAktion(Aktion aktion) {
+		this.aktion = aktion;
+	}
+
 }

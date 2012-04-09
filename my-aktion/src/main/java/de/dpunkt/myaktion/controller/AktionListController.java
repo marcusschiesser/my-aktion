@@ -21,6 +21,9 @@ public class AktionListController implements Serializable {
 
 	@Inject
 	private SpendeListController spendeListController;
+	
+	@Inject
+	private SpendeFormEditController spendeFormEditController;
 
 	@Inject @Deleted
 	private Event<Aktion> aktionDeleteEventSrc;
@@ -38,6 +41,7 @@ public class AktionListController implements Serializable {
 	}
 
 	public String doEditSpendeForm(Aktion aktion) {
+		spendeFormEditController.setAktion(aktion);
 		return Pages.SPENDE_FORM_EDIT;
 	}
 
