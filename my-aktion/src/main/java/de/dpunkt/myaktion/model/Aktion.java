@@ -29,10 +29,10 @@ public class Aktion {
 	@NotNull
 	@Size(min=4, max=30, message="Der Name einer Aktion muss min. 4 und darf max. 30 Zeichen lang sein.")
 	private String name;
-	@NotNull
+	@NotNull(message="Bitte ein Spendenziel angeben.")
 	@DecimalMin(value="10.00", message="Das Spendenziel für die Aktion muss min. 10 Euro sein.")
 	private Double spendenZiel;
-	@NotNull
+	@NotNull(message="Bitte einen Spendenbetrag angeben.")
 	@DecimalMin(value="1.00", message="Der Spendenbetrag muss min. 1 Euro sein.")
 	private Double spendenBetrag;
 	@Transient
