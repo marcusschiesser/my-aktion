@@ -11,11 +11,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Aktion {
+	@NotNull
+	@Size(min=4, max=30, message="Der Name einer Aktion muss min. 4 und darf max. 30 Zeichen lang sein.")
 	private String name;
+	@NotNull
+	@DecimalMin(value="10.00", message="Das Spendenziel für die Aktion muss min. 10 Euro sein.")
 	private Double spendenZiel;
+	@NotNull
+	@DecimalMin(value="1.00", message="Der Spendenbetrag muss min. 1 Euro sein.")
 	private Double spendenBetrag;
 	@Transient
 	private Double bisherGespendet;

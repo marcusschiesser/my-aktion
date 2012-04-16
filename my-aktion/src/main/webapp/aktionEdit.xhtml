@@ -18,21 +18,15 @@
 
 						<h:outputLabel value="Name:"></h:outputLabel>
 						<p:inputText id="a_name" 
-							value="#{aktionEditController.aktion.name}"
-							validatorMessage="Der Name einer Aktion muss min. 4 und darf max. 30 Zeichen lang sein.">
-							<f:validateRequired />
-							<f:validateLength minimum="4" maximum="30" />
+							value="#{aktionEditController.aktion.name}">
 						</p:inputText>
 						<p:message for="a_name"  />
 
 						<h:outputLabel value="Spendenziel:"></h:outputLabel>
 						<h:panelGroup>
 							<p:inputText id="a_spendenziel"
-								value="#{aktionEditController.aktion.spendenZiel}"
-								validatorMessage="Das Spendenziel für die Aktion muss min. 10 Euro sein.">
+								value="#{aktionEditController.aktion.spendenZiel}">
 								<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
-								<f:validateRequired />
-								<f:validateDoubleRange minimum="10.0" />
 							</p:inputText> EUR
 						</h:panelGroup>
 						<p:message for="a_spendenziel"  />
@@ -40,11 +34,8 @@
 						<h:outputLabel value="Spendenbetrag:"></h:outputLabel>
 						<h:panelGroup>
 							<p:inputText id="a_spendenbetrag"
-								value="#{aktionEditController.aktion.spendenBetrag}"
-								validatorMessage="Der Spendenbetrag muss min. 1 Euro sein.">
+								value="#{aktionEditController.aktion.spendenBetrag}">
 								<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
-								<f:validateRequired />
-								<f:validateDoubleRange minimum="1.0" />
 							</p:inputText> EUR
 						</h:panelGroup>
 						<p:message for="a_spendenbetrag"  />
@@ -57,28 +48,24 @@
 						<h:outputLabel value="Name:"></h:outputLabel>
 						<p:inputText id="b_name"
 							value="#{aktionEditController.aktion.konto.name}">
-							<f:validateRequired />
 						</p:inputText>
 						<p:message for="b_name"  />
 
 						<h:outputLabel value="Konto-Nr.:"></h:outputLabel>
 						<p:inputText id="b_konto"
 							value="#{aktionEditController.aktion.konto.kontoNr}">
-							<f:validateRequired />
 						</p:inputText>
 						<p:message for="b_konto"  />
 
 						<h:outputLabel value="BLZ:"></h:outputLabel>
 						<p:inputText id="b_blz"
 							value="#{aktionEditController.aktion.konto.blz}">
-							<f:validateRequired />
 						</p:inputText>
 						<p:message for="b_blz"  />
 
 						<h:outputLabel value="Name der Bank:"></h:outputLabel>
 						<p:inputText id="b_name_bank"
 							value="#{aktionEditController.aktion.konto.nameDerBank}">
-							<f:validateRequired />
 						</p:inputText>
 						<p:message for="b_name_bank"  />
 					</h:panelGrid>

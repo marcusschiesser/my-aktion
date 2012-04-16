@@ -37,28 +37,24 @@
 			<h:outputLabel value="Name:"></h:outputLabel>
 			<p:inputText id="name"
 				value="#{geldSpendenController.spende.spenderName}">
-				<f:validateRequired />
 			</p:inputText>
 			<p:message for="name" />
 
 			<h:outputLabel value="Konto-Nr.:"></h:outputLabel>
 			<p:inputText id="konto"
 				value="#{geldSpendenController.spende.konto.kontoNr}">
-				<f:validateRequired />
 			</p:inputText>
 			<p:message for="konto" />
 
 			<h:outputLabel value="BLZ:"></h:outputLabel>
 			<p:inputText id="blz"
 				value="#{geldSpendenController.spende.konto.blz}">
-				<f:validateRequired />
 			</p:inputText>
 			<p:message for="blz" />
 
 			<h:outputLabel value="Name der Bank:"></h:outputLabel>
 			<p:inputText id="name_bank"
 				value="#{geldSpendenController.spende.konto.nameDerBank}">
-				<f:validateRequired />
 			</p:inputText>
 			<p:message for="name_bank" />
 
@@ -66,7 +62,6 @@
 			<h:panelGroup>
 				<p:inputText id="spendenbetrag"
 					value="#{geldSpendenController.spende.betrag}">
-					<f:validateRequired />
 					<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
 				</p:inputText> EUR
 			</h:panelGroup>

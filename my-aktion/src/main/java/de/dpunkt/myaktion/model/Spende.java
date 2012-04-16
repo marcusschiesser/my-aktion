@@ -4,14 +4,27 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Spende {
+	// Der NumberConverter konvertiert leere Strings in einen Null-Wert, daher
+	// kommen bei Nicht-Angabe Null-Werte von Faces zurück - für diese wird daher ein Message-Wert benötigt.
+	@NotNull(message="Bitte einen Spendenbetrag angeben.")
+	@DecimalMin(value="1.00", message="Der Spendenbetrag muss min. 1 Euro sein.")
 	private Double betrag;
+	@NotNull
+	@Size(min=5, max=40, message="Der Name eines Spenders muss min. 5 und darf max. 40 Zeichen lang sein.")
 	private String spenderName;
+	@NotNull
 	private Boolean quittung;
+	@NotNull
 	private Status status;
+	@NotNull
 	private Konto konto;
+	@NotNull
 	@ManyToOne
 	private Aktion aktion;
 	
