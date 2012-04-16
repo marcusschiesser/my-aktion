@@ -9,14 +9,23 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@NamedQueries({
+	@NamedQuery(name=Aktion.findAll,query="SELECT a FROM Aktion a ORDER BY a.name"),
+	@NamedQuery(name=Aktion.getBisherGespendet,query="SELECT SUM(s.betrag) FROM Spende s WHERE s.aktion = :aktion")
+})
 @Entity
 public class Aktion {
+	public static final String findAll = "Aktion.findAll";
+	public static final String getBisherGespendet = "Aktion.getBisherGespendet";
+	
 	@NotNull
 	@Size(min=4, max=30, message="Der Name einer Aktion muss min. 4 und darf max. 30 Zeichen lang sein.")
 	private String name;
