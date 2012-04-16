@@ -26,7 +26,6 @@ public class SpendeService implements ISpendeService {
 		Aktion managedAktion = entityManager.find(Aktion.class, aktionId);
 		spende.setAktion(managedAktion);
 		entityManager.persist(spende);
-		System.err.println();
 	}
 
 }

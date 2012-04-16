@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -15,7 +15,7 @@ import de.dpunkt.myaktion.util.Events.Added;
 import de.dpunkt.myaktion.util.Events.Deleted;
 import de.dpunkt.myaktion.util.Events.Updated;
 
-@SessionScoped
+@RequestScoped
 @Named
 public class AktionListProducer implements Serializable {
 	
@@ -38,13 +38,11 @@ public class AktionListProducer implements Serializable {
 	public void onAktionAdded(@Observes @Added Aktion aktion) {
 		aktionService.addAktion(aktion);
 		init();
-//		getAktionen().add(aktion);
 	}
 	
 	public void onAktionDeleted(@Observes @Deleted Aktion aktion) {
 		aktionService.deleteAktion(aktion);
 		init();
-//		getAktionen().remove(aktion);
 	}
 
 	public void onAktionUpdated(@Observes @Updated Aktion aktion) {
