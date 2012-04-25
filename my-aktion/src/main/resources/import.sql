@@ -1,0 +1,1 @@
+insert into Organisator (email, vorname, nachname, passwort) values ('max@mustermann.de', 'Max', 'Mustermann', 'secret')
