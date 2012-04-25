@@ -2,21 +2,28 @@ package de.dpunkt.myaktion.services;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import de.dpunkt.myaktion.model.Aktion;
+import de.dpunkt.myaktion.model.Organisator;
 
 @Stateless
 public class AktionServiceBean implements AktionService {
 
 	@Inject
-	EntityManager entityManager;
+	private EntityManager entityManager;
 
+	@Resource
+	private SessionContext sessionContext;
+	
 	public List<Aktion> getAllAktionen() {
-		TypedQuery<Aktion> query = entityManager.createNamedQuery(Aktion.findAll, Aktion.class);
+		TypedQuery<Aktion> query = entityManager.createNamedQuery(Aktion.findByOrganisator, Aktion.class);
+		query.setParameter("organisator", getLoggedinOrganisator());
 		List<Aktion> aktionen = query.getResultList();
 		// transientes bisher gespendet Feld aktualisieren
 		for(Aktion a: aktionen) {
@@ -36,10 +43,20 @@ public class AktionServiceBean implements AktionService {
 	}
 
 	public void addAktion(Aktion aktion) {
+		Organisator organisator = getLoggedinOrganisator();
+		aktion.setOrganisator(organisator);
 		entityManager.persist(aktion);
 	}
 
+	private Organisator getLoggedinOrganisator() {
+		String organisatorEmail = sessionContext.getCallerPrincipal().getName();
+		Organisator organisator = entityManager.createNamedQuery(Organisator.findByEmail, Organisator.class)
+			.setParameter("email", organisatorEmail).getSingleResult();
+		return organisator;
+	}
+
 	public void deleteAktion(Aktion aktion) {
+		// TODO: alle Spenden der Aktion löschen
 		Aktion managedAktion = entityManager.find(Aktion.class, aktion.getId());
 		entityManager.remove(managedAktion);
 	}

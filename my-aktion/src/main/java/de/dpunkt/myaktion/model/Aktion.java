@@ -9,6 +9,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -18,11 +19,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @NamedQueries({
+	@NamedQuery(name=Aktion.findByOrganisator,query="SELECT a FROM Aktion a WHERE a.organisator = :organisator ORDER BY a.name"),
 	@NamedQuery(name=Aktion.findAll,query="SELECT a FROM Aktion a ORDER BY a.name"),
 	@NamedQuery(name=Aktion.getBisherGespendet,query="SELECT SUM(s.betrag) FROM Spende s WHERE s.aktion = :aktion")
 })
 @Entity
 public class Aktion {
+	public static final String findByOrganisator = "Aktion.findByOrganisator";
 	public static final String findAll = "Aktion.findAll";
 	public static final String getBisherGespendet = "Aktion.getBisherGespendet";
 	
@@ -45,6 +48,8 @@ public class Aktion {
 	// Alternative: @CascadeType.ALL bei dieser Relation
 	@OneToMany(mappedBy = "aktion")
 	private List<Spende> spenden;
+	@ManyToOne
+	private Organisator organisator;
 
 	@GeneratedValue
 	@Id
@@ -109,5 +114,14 @@ public class Aktion {
 	public void setSpenden(List<Spende> spenden) {
 		this.spenden = spenden;
 	}
+
+	public Organisator getOrganisator() {
+		return organisator;
+	}
+
+	public void setOrganisator(Organisator organisator) {
+		this.organisator = organisator;
+	}
+
 
 }
