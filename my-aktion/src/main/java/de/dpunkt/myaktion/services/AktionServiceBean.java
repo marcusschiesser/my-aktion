@@ -3,16 +3,21 @@ package de.dpunkt.myaktion.services;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import org.jboss.ejb3.annotation.SecurityDomain;
+
 import de.dpunkt.myaktion.model.Aktion;
 import de.dpunkt.myaktion.model.Organisator;
 
 @Stateless
+@SecurityDomain("my-aktion")
+@RolesAllowed("Organisator")
 public class AktionServiceBean implements AktionService {
 
 	@Inject
