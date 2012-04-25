@@ -41,7 +41,7 @@ public class Aktion {
 	@AttributeOverrides({ @AttributeOverride(name = "name", column = @Column(name = "kontoName")) })
 	@Embedded
 	private Konto konto;
-	// Spende müssen immer manuell persistiert werden
+	// Spenden müssen immer manuell persistiert werden
 	// Alternative: @CascadeType.ALL bei dieser Relation
 	@OneToMany(mappedBy = "aktion")
 	private List<Spende> spenden;
