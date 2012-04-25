@@ -9,7 +9,7 @@ import javax.inject.Named;
 import de.dpunkt.myaktion.model.Aktion;
 import de.dpunkt.myaktion.model.Spende;
 import de.dpunkt.myaktion.model.Spende.Status;
-import de.dpunkt.myaktion.services.ISpendeService;
+import de.dpunkt.myaktion.services.SpendeService;
 
 @RequestScoped
 @Named
@@ -18,7 +18,7 @@ public class SpendeListController {
 	private List<Spende> spenden;
 	
 	@Inject
-	private ISpendeService spendeService;
+	private SpendeService spendeService;
 
 	public List<Spende> getSpenden() {
 		return spenden;
