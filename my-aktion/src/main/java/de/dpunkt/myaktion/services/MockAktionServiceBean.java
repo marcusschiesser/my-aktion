@@ -13,7 +13,7 @@ import de.dpunkt.myaktion.model.Spende.Status;
 
 @RequestScoped
 @Alternative
-public class MockAktionService implements IAktionService {
+public class MockAktionServiceBean implements AktionService {
 
 	@Override
 	public List<Aktion> getAllAktionen() {

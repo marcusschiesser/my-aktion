@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import de.dpunkt.myaktion.model.Aktion;
-import de.dpunkt.myaktion.services.IAktionService;
+import de.dpunkt.myaktion.services.AktionService;
 import de.dpunkt.myaktion.util.Events.Added;
 import de.dpunkt.myaktion.util.Events.Deleted;
 
@@ -23,7 +23,7 @@ public class AktionListProducer implements Serializable {
 	private List<Aktion> aktionen;
 	
 	@Inject
-	private IAktionService aktionService;
+	private AktionService aktionService;
 
 	@PostConstruct
 	public void init() {
