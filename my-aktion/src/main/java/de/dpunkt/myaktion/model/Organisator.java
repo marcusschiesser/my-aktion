@@ -5,6 +5,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @NamedQueries({
 	@NamedQuery(name=Organisator.findByEmail,query="SELECT o FROM Organisator o WHERE o.email = :email"),
@@ -14,12 +16,16 @@ public class Organisator {
 	public static final String findByEmail = "Organisator.findByEmail";
 	
 	@NotNull
+	@Size(min=3, max=20, message="Der Vorname eines Organisators muss min. 3 und darf max. 20 Zeichen lang sein.")
 	private String vorname;
 	@NotNull
+	@Size(min=3, max=30, message="Der Nachname eines Organisators muss min. 3 und darf max. 30 Zeichen lang sein.")
 	private String nachname;
 	@Id
+	@Pattern(regexp="^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message="Bitte eine valide E-Mail-Adresse angeben.")
 	private String email;
 	@NotNull
+	@Size(min=6, max=20, message="Ein Passwort muss min. 6 und darf max. 20 Zeichen lang sein.")
 	private String passwort;
 
 	public String getVorname() {
