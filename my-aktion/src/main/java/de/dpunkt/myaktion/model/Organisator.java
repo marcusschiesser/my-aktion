@@ -9,7 +9,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @NamedQueries({
-	@NamedQuery(name=Organisator.findByEmail,query="SELECT o FROM Organisator o WHERE o.email = :email"),
+	@NamedQuery(name=Organisator.findByEmail,query="SELECT o FROM Organisator o WHERE o.email = :email")
 })
 @Entity
 public class Organisator {
