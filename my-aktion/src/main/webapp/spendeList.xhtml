@@ -14,8 +14,8 @@
 		<h:outputText value="#{spendeListController.aktion.konto.nameDerBank}" /></h2>
 
 		<h:form>
-			<p:dataTable value="#{spendeListController.spenden}" var="spende"
-				rendered="#{spendeListController.spenden!=null}">
+			<p:dataTable value="#{spendeListController.aktion.spenden}" var="spende"
+				rendered="#{spendeListController.aktion!=null}">
 				<p:column>
 					<f:facet name="header">
 						<h:outputText value="Name" />

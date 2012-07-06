@@ -62,7 +62,7 @@ public class SpendeListTest {
 	   spendeService.addSpende(aktionId, geldSpendenController.getSpende());
 	   Long spendeId = geldSpendenController.getSpende().getId();
 	   spendeListController.setAktion(aktion);
-	   List<Spende> spenden = spendeListController.getSpenden();
+	   List<Spende> spenden = spendeListController.getAktion().getSpenden();
 	   Assert.assertNotNull(spenden);
 	   Assert.assertEquals(spendeId, spenden.get(0).getId());
    }
