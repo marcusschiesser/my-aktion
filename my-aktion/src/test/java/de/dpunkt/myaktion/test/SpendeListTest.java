@@ -68,18 +68,15 @@ public class SpendeListTest {
 		geldSpendenController.setAktionId(aktionId);
 		geldSpendenController.setSpende(MockAktionServiceBean
 				.createMockSpende());
-		// Vor dem Aufruf von geldSpendenController.doSpende() muss in der
-		// Methode facesContext.addMessage(null, facesMessage);
-		// auskommentiert werden!
-		geldSpendenController.doSpende();
+		geldSpendenController.addSpende();
 		// Überprüfen, ob nach der Spende eine Liste von Spende-Objekten für die
 		// Aktion existiert
 		List<Spende> spenden = spendeService.getSpendeList(aktionId);
 		Assert.assertNotNull(spenden);
-		// Überprüfen, ob das erste Objekt der Liste dasselbe wie im
-		// GeldSepndenController ist
-		Long spendeId = geldSpendenController.getSpende().getId();
-		Assert.assertEquals(spendeId, spenden.get(0).getId());
+		// Überprüfen, ob der Betrag der Spende in der Liste derselbe ist, wie in
+		// der gemockten Spende
+		Assert.assertEquals(MockAktionServiceBean
+				.createMockSpende().getBetrag(), spenden.get(0).getBetrag());
 	}
 
 	@Test
