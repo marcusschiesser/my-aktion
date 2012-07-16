@@ -24,7 +24,6 @@ import de.dpunkt.myaktion.model.Spende;
 import de.dpunkt.myaktion.services.AktionService;
 import de.dpunkt.myaktion.services.AktionServiceBean;
 import de.dpunkt.myaktion.services.SpendeService;
-import de.dpunkt.myaktion.services.MockAktionServiceBean;
 import de.dpunkt.myaktion.services.SpendeServiceBean;
 import de.dpunkt.myaktion.util.Resources;
 
@@ -39,7 +38,7 @@ public class SpendeListTest {
 						GeldSpendenController.class, SpendeService.class,
 						SpendeServiceBean.class, AktionService.class,
 						AktionServiceBean.class, Resources.class,
-						MockAktionServiceBean.class)
+						MockFactory.class)
 				.addAsResource("META-INF/test-persistence.xml",
 						"META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
@@ -62,11 +61,11 @@ public class SpendeListTest {
 
 	@Test
 	public void testAddSpende() throws Exception {
-		Aktion aktion = MockAktionServiceBean.createMockAktion();
+		Aktion aktion = MockFactory.createMockAktion();
 		aktionService.addAktion(aktion);
 		Long aktionId = aktion.getId();
 		geldSpendenController.setAktionId(aktionId);
-		geldSpendenController.setSpende(MockAktionServiceBean
+		geldSpendenController.setSpende(MockFactory
 				.createMockSpende());
 		geldSpendenController.addSpende();
 		// Überprüfen, ob nach der Spende eine Liste von Spende-Objekten für die
@@ -75,19 +74,19 @@ public class SpendeListTest {
 		Assert.assertNotNull(spenden);
 		// Überprüfen, ob der Betrag der Spende in der Liste derselbe ist, wie in
 		// der gemockten Spende
-		Assert.assertEquals(MockAktionServiceBean
+		Assert.assertEquals(MockFactory
 				.createMockSpende().getBetrag(), spenden.get(0).getBetrag());
 	}
 
 	@Test
 	public void testBisherGespendet() throws Exception {
-		Aktion aktion = MockAktionServiceBean.createMockAktion();
+		Aktion aktion = MockFactory.createMockAktion();
 		aktionService.addAktion(aktion);
 		// zwei Spenden erstellen (pro Spende 20,-)
 		spendeService.addSpende(aktion.getId(),
-				MockAktionServiceBean.createMockSpende());
+				MockFactory.createMockSpende());
 		spendeService.addSpende(aktion.getId(),
-				MockAktionServiceBean.createMockSpende());
+				MockFactory.createMockSpende());
 		// persistierte Aktion in der Liste aller Aktionen suchen
 		List<Aktion> aktionen = aktionService.getAllAktionen();
 		Aktion persistedAktion = null;
