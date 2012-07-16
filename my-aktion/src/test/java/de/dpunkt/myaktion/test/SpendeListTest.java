@@ -63,14 +63,13 @@ public class SpendeListTest {
 	public void testAddSpende() throws Exception {
 		Aktion aktion = MockFactory.createMockAktion();
 		aktionService.addAktion(aktion);
-		Long aktionId = aktion.getId();
-		geldSpendenController.setAktionId(aktionId);
+		geldSpendenController.setAktionId(aktion.getId());
 		geldSpendenController.setSpende(MockFactory
 				.createMockSpende());
 		geldSpendenController.addSpende();
 		// Überprüfen, ob nach der Spende eine Liste von Spende-Objekten für die
 		// Aktion existiert
-		List<Spende> spenden = spendeService.getSpendeList(aktionId);
+		List<Spende> spenden = spendeService.getSpendeList(aktion.getId());
 		Assert.assertNotNull(spenden);
 		// Überprüfen, ob der Betrag der Spende in der Liste derselbe ist, wie in
 		// der gemockten Spende
@@ -94,9 +93,9 @@ public class SpendeListTest {
 			if (a.getId() == aktion.getId())
 				persistedAktion = a;
 		}
-		// Überprüfen, ob der gespendete Wert für die Aktion 40,- beträgt
+		// Überprüfen, ob der gespendete Wert für die Aktion der zweifache Spendenbetrag ist
 		Double bisherGespendet = persistedAktion.getBisherGespendet();
-		Assert.assertEquals(new Double(40d), bisherGespendet);
+		Assert.assertEquals(new Double(2*MockFactory.createMockSpende().getBetrag()), bisherGespendet);
 	}
 
 }
