@@ -5,9 +5,9 @@ import de.dpunkt.myaktion.model.Konto;
 import de.dpunkt.myaktion.model.Spende;
 import de.dpunkt.myaktion.model.Spende.Status;
 
-public class MockFactory {
+public class TestDataFactory {
 
-	public static Aktion createMockAktion() {
+	public static Aktion createTestAktion() {
 		Aktion aktion = new Aktion();
 		aktion.setName("Trikots für A-Jugend");
 		aktion.setSpendenZiel(1000d);
@@ -18,7 +18,7 @@ public class MockFactory {
 		return aktion;
 	}
 	
-	public static Spende createMockSpende() {
+	public static Spende createTestSpende() {
 		Spende spende = new Spende();
 		spende.setSpenderName("Heinz Schmidt");
 		spende.setBetrag(20d);

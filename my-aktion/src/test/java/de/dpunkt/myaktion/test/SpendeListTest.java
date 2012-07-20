@@ -38,7 +38,7 @@ public class SpendeListTest {
 						GeldSpendenController.class, SpendeService.class,
 						SpendeServiceBean.class, AktionService.class,
 						AktionServiceBean.class, Resources.class,
-						MockFactory.class)
+						TestDataFactory.class)
 				.addAsResource("META-INF/test-persistence.xml",
 						"META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
@@ -61,11 +61,11 @@ public class SpendeListTest {
 
 	@Test
 	public void testAddSpende() throws Exception {
-		Aktion aktion = MockFactory.createMockAktion();
+		Aktion aktion = TestDataFactory.createTestAktion();
 		aktionService.addAktion(aktion);
 		geldSpendenController.setAktionId(aktion.getId());
-		geldSpendenController.setSpende(MockFactory
-				.createMockSpende());
+		geldSpendenController.setSpende(TestDataFactory
+				.createTestSpende());
 		geldSpendenController.addSpende();
 		// Überprüfen, ob nach der Spende eine Liste von Spende-Objekten für die
 		// Aktion existiert
@@ -73,19 +73,19 @@ public class SpendeListTest {
 		Assert.assertNotNull(spenden);
 		// Überprüfen, ob der Betrag der Spende in der Liste derselbe ist, wie in
 		// der gemockten Spende
-		Assert.assertEquals(MockFactory
-				.createMockSpende().getBetrag(), spenden.get(0).getBetrag());
+		Assert.assertEquals(TestDataFactory
+				.createTestSpende().getBetrag(), spenden.get(0).getBetrag());
 	}
 
 	@Test
 	public void testBisherGespendet() throws Exception {
-		Aktion aktion = MockFactory.createMockAktion();
+		Aktion aktion = TestDataFactory.createTestAktion();
 		aktionService.addAktion(aktion);
 		// zwei Spenden erstellen (pro Spende 20,-)
 		spendeService.addSpende(aktion.getId(),
-				MockFactory.createMockSpende());
+				TestDataFactory.createTestSpende());
 		spendeService.addSpende(aktion.getId(),
-				MockFactory.createMockSpende());
+				TestDataFactory.createTestSpende());
 		// persistierte Aktion in der Liste aller Aktionen suchen
 		List<Aktion> aktionen = aktionService.getAllAktionen();
 		Aktion persistedAktion = null;
@@ -95,7 +95,7 @@ public class SpendeListTest {
 		}
 		// Überprüfen, ob der gespendete Wert für die Aktion der zweifache Spendenbetrag ist
 		Double bisherGespendet = persistedAktion.getBisherGespendet();
-		Assert.assertEquals(new Double(2*MockFactory.createMockSpende().getBetrag()), bisherGespendet);
+		Assert.assertEquals(new Double(2*TestDataFactory.createTestSpende().getBetrag()), bisherGespendet);
 	}
 
 }
