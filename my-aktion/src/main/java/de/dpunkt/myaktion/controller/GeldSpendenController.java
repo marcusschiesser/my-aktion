@@ -71,16 +71,20 @@ public class GeldSpendenController implements Serializable {
 	}
 
 	public String doSpende() {
-		getSpende().setStatus(Status.IN_BEARBEITUNG);
-		spendeService.addSpende(getAktionId(), getSpende());
-		logger.info(spende.getSpenderName() + " hat " + spende.getBetrag()
-				+ " Euro gespendet.");
+		addSpende();
 		FacesMessage facesMessage = new FacesMessage(
 				FacesMessage.SEVERITY_INFO, "Vielen Dank für die Spende, "
 						+ spende.getSpenderName() + "!", null);
 		facesContext.addMessage(null, facesMessage);
-		init();
 		return Pages.GELD_SPENDEN;
+	}
+
+	public void addSpende() {
+		getSpende().setStatus(Status.IN_BEARBEITUNG);
+		spendeService.addSpende(getAktionId(), getSpende());
+		logger.info(spende.getSpenderName() + " hat " + spende.getBetrag()
+				+ " Euro gespendet.");
+		init();
 	}
 
 }
