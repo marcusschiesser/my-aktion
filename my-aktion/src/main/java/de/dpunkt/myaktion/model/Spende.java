@@ -4,12 +4,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@NamedQueries({
+	@NamedQuery(name=Spende.findWorkInProcess,query="SELECT s FROM Spende s WHERE s.status = :status")
+})
 @Entity
 public class Spende {
+	public static final String findWorkInProcess = "Spende.findWorkInProcess";
+
 	// Der NumberConverter konvertiert leere Strings in einen Null-Wert, daher
 	// kommen bei Nicht-Angabe Null-Werte von Faces zurück - für diese wird daher ein Message-Wert benötigt.
 	@NotNull(message="Bitte einen Spendenbetrag angeben.")
