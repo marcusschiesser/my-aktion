@@ -1,1 +1,2 @@
-insert into Organisator (email, vorname, nachname, passwort) values ('max@mustermann.de', 'Max', 'Mustermann', 'secret')
+insert into Organisator (email, vorname, nachname, passwort) values ('max@mustermann.de', 'Max', 'Mustermann', 'secret');
+insert into Organisator (email, vorname, nachname, passwort) values ('martha@mustermann.de', 'Martha', 'Mustermann', 'secret');
