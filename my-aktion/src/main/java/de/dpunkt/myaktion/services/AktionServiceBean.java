@@ -10,13 +10,10 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import org.jboss.ejb3.annotation.SecurityDomain;
-
 import de.dpunkt.myaktion.model.Aktion;
 import de.dpunkt.myaktion.model.Organisator;
 
 @Stateless
-@SecurityDomain("my-aktion")
 @RolesAllowed("Organisator")
 public class AktionServiceBean implements AktionService {
 

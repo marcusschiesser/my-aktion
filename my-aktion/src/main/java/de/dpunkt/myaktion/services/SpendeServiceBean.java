@@ -8,13 +8,10 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import org.jboss.ejb3.annotation.SecurityDomain;
-
 import de.dpunkt.myaktion.model.Aktion;
 import de.dpunkt.myaktion.model.Spende;
 
 @Stateless
-@SecurityDomain("my-aktion")
 public class SpendeServiceBean implements SpendeService {
 
 	@Inject
