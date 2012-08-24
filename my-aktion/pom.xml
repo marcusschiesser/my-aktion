@@ -25,6 +25,7 @@
 			work with JBoss EAP 6. It requires you have access to the JBoss EAP 6 maven 
 			repository. -->
 		<!-- <javaee6.web.spec.version>3.0.0.Beta1-redhat-1</javaee6.web.spec.version> -->
+		<seam.version>3.1.0.Final</seam.version>
 	</properties>
 
 	<dependencyManagement>
@@ -41,6 +42,13 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+         	<dependency>
+                <groupId>org.jboss.seam</groupId>
+                <artifactId>seam-bom</artifactId>
+                <version>${seam.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+             </dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -95,7 +103,6 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>4.2.0.Final</version>
 			<scope>provided</scope>
 			<exclusions>
 				<exclusion>
@@ -151,21 +158,24 @@
 		<dependency>
 			<groupId>org.jboss.seam.faces</groupId>
 			<artifactId>seam-faces-api</artifactId>
-			<version>3.1.0.Final</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.jboss.seam.faces</groupId>
 			<artifactId>seam-faces</artifactId>
-			<version>3.1.0.Final</version>
 			<scope>runtime</scope>
 		</dependency>
-		
+
 		<dependency>
-		   <groupId>org.jboss.seam.international</groupId>
-		   <artifactId>seam-international</artifactId>
-		   <version>3.1.0.Final</version>
-		   <scope>runtime</scope>
+			<groupId>org.jboss.seam.international</groupId>
+			<artifactId>seam-international</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+				
+		<dependency>
+		    <groupId>joda-time</groupId>
+		    <artifactId>joda-time</artifactId>
+		    <scope>runtime</scope>
 		</dependency>
 
 		<dependency>
