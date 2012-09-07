@@ -3,7 +3,9 @@ package de.dpunkt.myaktion.controller;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 import de.dpunkt.myaktion.model.Aktion;
 
@@ -21,8 +23,19 @@ public class SpendeFormEditController implements Serializable {
 		return Pages.AKTION_LIST;
 	}
 	
+	@Inject
+	private HttpServletRequest req;
+	
+	private String getAppUrl() {
+		String scheme = req.getScheme();             
+		String serverName = req.getServerName();     
+		int serverPort = req.getServerPort();        
+		String contextPath = req.getContextPath();   
+		return scheme+"://"+serverName+":" + serverPort + contextPath;
+	}
+	
 	public String getUrl() {
-		return "http://localhost:8080/my-aktion/geldSpenden.jsf?bgColor=" + bgColor + "&textColor=" + textColor + "&aktionId=" + aktion.getId();
+		return getAppUrl()+"/"+Pages.GELD_SPENDEN+".jsf"+"?bgColor=" + bgColor + "&textColor=" + textColor + "&aktionId=" + aktion.getId();
 	}
 
 	public String getTextColor() {
