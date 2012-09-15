@@ -9,4 +9,5 @@ public interface AktionService {
 	void addAktion(Aktion aktion);
 	void deleteAktion(Aktion aktion);
 	void updateAktion(Aktion aktion);
+	void deleteAktion(Long aktionId);
 }

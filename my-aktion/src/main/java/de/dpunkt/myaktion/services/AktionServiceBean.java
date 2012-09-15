@@ -58,13 +58,16 @@ public class AktionServiceBean implements AktionService {
 	}
 
 	public void deleteAktion(Aktion aktion) {
-		// TODO: alle Spenden der Aktion löschen
-		Aktion managedAktion = entityManager.find(Aktion.class, aktion.getId());
-		entityManager.remove(managedAktion);
+		deleteAktion(aktion.getId());
 	}
 
 	public void updateAktion(Aktion aktion) {
 		entityManager.merge(aktion);
+	}
+
+	public void deleteAktion(Long aktionId) {
+		Aktion managedAktion = entityManager.find(Aktion.class, aktionId);
+		entityManager.remove(managedAktion);
 	}
 
 }
