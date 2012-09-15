@@ -1,5 +1,7 @@
 package de.dpunkt.myaktion.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,7 +16,9 @@ import javax.validation.constraints.Size;
 	@NamedQuery(name=Spende.findWorkInProcess,query="SELECT s FROM Spende s WHERE s.status = :status")
 })
 @Entity
-public class Spende {
+public class Spende implements Serializable {
+	private static final long serialVersionUID = -305029412912522665L;
+
 	public static final String findWorkInProcess = "Spende.findWorkInProcess";
 
 	// Der NumberConverter konvertiert leere Strings in einen Null-Wert, daher
