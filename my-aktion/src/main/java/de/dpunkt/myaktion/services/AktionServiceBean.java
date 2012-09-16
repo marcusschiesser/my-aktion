@@ -44,10 +44,11 @@ public class AktionServiceBean implements AktionService {
 		return result;
 	}
 
-	public void addAktion(Aktion aktion) {
+	public Aktion addAktion(Aktion aktion) {
 		Organisator organisator = getLoggedinOrganisator();
 		aktion.setOrganisator(organisator);
 		entityManager.persist(aktion);
+		return aktion;
 	}
 
 	private Organisator getLoggedinOrganisator() {
@@ -61,13 +62,18 @@ public class AktionServiceBean implements AktionService {
 		deleteAktion(aktion.getId());
 	}
 
-	public void updateAktion(Aktion aktion) {
-		entityManager.merge(aktion);
+	public Aktion updateAktion(Aktion aktion) {
+		return entityManager.merge(aktion);
 	}
 
 	public void deleteAktion(Long aktionId) {
-		Aktion managedAktion = entityManager.find(Aktion.class, aktionId);
+		Aktion managedAktion = getAktion(aktionId);
 		entityManager.remove(managedAktion);
+	}
+
+	public Aktion getAktion(Long aktionId) {
+		Aktion managedAktion = entityManager.find(Aktion.class, aktionId);
+		return managedAktion;
 	}
 
 }
