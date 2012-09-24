@@ -1,5 +1,7 @@
 package de.dpunkt.myaktion.services;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -34,6 +36,20 @@ public class SpendeServiceBean implements SpendeService {
 		List<Spende> spenden = managedAktion.getSpenden();
 		spenden.size(); // Wg. JPA Field-Access müssen wir eine Methode auf dem spenden Objekt aufrufen
 		return spenden;
+	}
+
+	@PermitAll
+	public List<Spende> getSpendeListPublic(Long aktionId) {
+		Aktion managedAktion = entityManager.find(Aktion.class, aktionId);
+		List<Spende> spenden = managedAktion.getSpenden();
+		List<Spende> result = new ArrayList<Spende>(spenden.size());
+		for (Spende spende : spenden) {
+			Spende filtered = new Spende();
+			filtered.setBetrag(spende.getBetrag());
+			filtered.setSpenderName(spende.getSpenderName());
+			result.add(filtered);
+		}
+		return result;
 	}
 
 	@PermitAll
