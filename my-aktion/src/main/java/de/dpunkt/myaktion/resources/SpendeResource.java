@@ -40,6 +40,17 @@ public class SpendeResource {
 		}
 		return spenden;
 	}
+
+	/**
+	 * wie getSpendeList, kann jedoch ohne Authentifizierung aufgerufen werden
+	 */ 
+	@GET
+	@Path("/spende/list/{aktionId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Spende> getSpendeListPublic(@PathParam(value="aktionId") Long aktionId) {
+		List<Spende> spenden = spendeService.getSpendeListPublic(aktionId);
+		return spenden;
+	}
 	
 	/**
 	 * curl -k -d "spenderName=Hans Bier&betrag=10&blz=12345678&kontoNr=12&nameDerBank=ABC&quittung=false" https://localhost:8443/my-aktion/rest/spende/34
