@@ -8,6 +8,7 @@ import javax.enterprise.inject.spi.InjectionPoint;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletRequest;
 
 public class Resources {
 	@SuppressWarnings("unused")
@@ -21,9 +22,16 @@ public class Resources {
 				.getName());
 	}
 
-   @Produces
-   @RequestScoped
-   public FacesContext produceFacesContext() {
-      return FacesContext.getCurrentInstance();
-   }
+	@Produces
+	@RequestScoped
+	public FacesContext produceFacesContext() {
+		return FacesContext.getCurrentInstance();
+	}
+
+	@Produces
+	@RequestScoped
+	HttpServletRequest produceRequest() {
+		return (HttpServletRequest) FacesContext.getCurrentInstance()
+				.getExternalContext().getRequest();
+	}
 }
