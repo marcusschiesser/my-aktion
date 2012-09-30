@@ -1,27 +1,20 @@
 package de.dpunkt.myaktion.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
-import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.jms.Connection;
-import javax.jms.JMSException;
-import javax.jms.MessageProducer;
-import javax.jms.ObjectMessage;
-import javax.jms.Queue;
-import javax.jms.QueueConnectionFactory;
-import javax.jms.Session;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import de.dpunkt.myaktion.model.Aktion;
 import de.dpunkt.myaktion.model.Spende;
 import de.dpunkt.myaktion.model.Spende.Status;
+import de.dpunkt.myaktion.monitor.ws.SpendeDelegatorService;
 
 @Stateless
 public class SpendeServiceBean implements SpendeService {
@@ -32,12 +25,6 @@ public class SpendeServiceBean implements SpendeService {
 	@Inject
 	private Logger logger;
 	
-	@Resource(mappedName="WebSocket")
-	private Queue queue;
-	
-	@Resource(mappedName="WebSocketFactory")
-	private QueueConnectionFactory queueConnectionFactory;
-	
 	@RolesAllowed("Organisator")
 	public List<Spende> getSpendeList(Long aktionId) {
 		Aktion managedAktion = entityManager.find(Aktion.class, aktionId);
@@ -47,31 +34,32 @@ public class SpendeServiceBean implements SpendeService {
 	}
 
 	@PermitAll
+	public List<Spende> getSpendeListPublic(Long aktionId) {
+		Aktion managedAktion = entityManager.find(Aktion.class, aktionId);
+		List<Spende> spenden = managedAktion.getSpenden();
+		List<Spende> result = new ArrayList<Spende>(spenden.size());
+		for (Spende spende : spenden) {
+			Spende filtered = new Spende();
+			filtered.setBetrag(spende.getBetrag());
+			filtered.setSpenderName(spende.getSpenderName());
+			result.add(filtered);
+		}
+		return result;
+	}
+
+	@PermitAll
 	public void addSpende(Long aktionId, Spende spende) {
+		// Spende an Glassfish über JAX-WS senden
+		try {
+			SpendeDelegatorService delegatorService = new SpendeDelegatorService();
+			delegatorService.getSpendeDelegatorPort().receiveSpende(spende);
+		} catch(Exception e) {
+			logger.severe("Spende konnte nicht an Glassfish weitergeleitet werden. Läuft der Glassfish?");
+		}
 		// Spende in lokaler Datenbank hinzufügen
 		Aktion managedAktion = entityManager.find(Aktion.class, aktionId);
 		spende.setAktion(managedAktion);
 		entityManager.persist(spende);
-		// Spende an JMS-Queue senden
-		Connection connection = null;
-		try {
-			connection = queueConnectionFactory.createQueueConnection();
-			Session session = connection.createSession(true, 0);
-			MessageProducer producer = session.createProducer(queue);
-			ObjectMessage message = session.createObjectMessage(spende);
-			producer.send(message);	
-		} catch (JMSException e) {
-			throw new EJBException("Fehler beim Senden der Spende-Nachricht", e);
-		} finally {
-			// oder ganz korrekt: http://shrubbery.mynetgear.net/c/display/W/Close+JMS+Objects
-			if(connection!=null) {
-				try {
-					connection.close();
-				} catch (JMSException e) {
-					throw new EJBException("Fehler beim Schließen der JMS-Queue", e);
-				}
-			}
-		}
 	}
 	
 	@PermitAll
