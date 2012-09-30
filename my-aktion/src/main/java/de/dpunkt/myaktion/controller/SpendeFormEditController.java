@@ -2,10 +2,10 @@ package de.dpunkt.myaktion.controller;
 
 import java.io.Serializable;
 
-import javax.faces.bean.ViewScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
-@ViewScoped
+@SessionScoped
 @Named
 public class SpendeFormEditController implements Serializable {
 	
