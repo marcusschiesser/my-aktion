@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientFactory;
 import javax.ws.rs.client.WebTarget;
@@ -21,6 +22,7 @@ import org.glassfish.websocket.api.annotations.WebSocketOpen;
 
 import de.dpunkt.myaktion.model.Spende;
 import de.dpunkt.myaktion.model.SpendeListMBR;
+import de.dpunkt.myaktion.monitor.util.LocalHostnameVerifier;
 
 @WebSocket(path = "/spende", remote = SpendeRemote.class)
 public class MonitorWebSocket {
@@ -31,21 +33,11 @@ public class MonitorWebSocket {
 	public EndpointContext wsc; // Muss public sein!
 
 	private static MonitorWebSocket _instance = null;
-	
+
 	static {
-	    //for localhost testing only
-	    javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(
-	    new javax.net.ssl.HostnameVerifier(){
- 
-	        public boolean verify(String hostname,
-	                javax.net.ssl.SSLSession sslSession) {
-	            if (hostname.equals("localhost")) {
-	                return true;
-	            }
-	            return false;
-	        }
-	        
-	    });
+		// erlaubt ausschliesslich localhost fuer SSL
+		HttpsURLConnection
+				.setDefaultHostnameVerifier(new LocalHostnameVerifier());
 	}
 
 	public MonitorWebSocket() {
@@ -64,10 +56,13 @@ public class MonitorWebSocket {
 		System.out.println("Peer entered conversation: " + remote);
 		Client client = ClientFactory.newClient();
 		client.configuration().register(SpendeListMBR.class);
-        WebTarget target = client.target("http://localhost:8180/my-aktion/rest/spende/list/11");
-        GenericType<List<Spende>> list = new GenericType<List<Spende>>() {};
-        List<Spende> result = target.request(MediaType.APPLICATION_JSON).get(list);
-        for (Spende spende : result) {
+		WebTarget target = client
+				.target("https://localhost:8543/my-aktion/rest/spende/list/11");
+		GenericType<List<Spende>> list = new GenericType<List<Spende>>() {
+		};
+		List<Spende> result = target.request(MediaType.APPLICATION_JSON).get(
+				list);
+		for (Spende spende : result) {
 			sendSpende(spende);
 		}
 	}
