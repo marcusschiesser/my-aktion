@@ -15,6 +15,7 @@ import de.dpunkt.myaktion.model.Aktion;
 import de.dpunkt.myaktion.model.Spende;
 import de.dpunkt.myaktion.model.Spende.Status;
 import de.dpunkt.myaktion.monitor.ws.SpendeDelegatorService;
+import de.dpunkt.myaktion.services.exceptions.ObjectNotFoundException;
 
 @Stateless
 public class SpendeServiceBean implements SpendeService {
@@ -34,8 +35,10 @@ public class SpendeServiceBean implements SpendeService {
 	}
 
 	@PermitAll
-	public List<Spende> getSpendeListPublic(Long aktionId) {
+	public List<Spende> getSpendeListPublic(Long aktionId) throws ObjectNotFoundException {
 		Aktion managedAktion = entityManager.find(Aktion.class, aktionId);
+		if(managedAktion==null)
+			throw new ObjectNotFoundException();
 		List<Spende> spenden = managedAktion.getSpenden();
 		List<Spende> result = new ArrayList<Spende>(spenden.size());
 		for (Spende spende : spenden) {

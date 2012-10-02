@@ -2,41 +2,59 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Spenden Monitor</title>
+<title>My-Aktion-Monitor</title>
+<link rel="stylesheet" type="text/css" href="resources/css/screen.css">
 </head>
 
 <body>
-	<script
-		src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 	<script>
-		function sendSpende() {
-			var text = $('#email').val();
-			websocket.send(text);
-			writeText("Sende: " + text);
+		function setAktionId(id) {
+			clearText();
+			websocket.send(id);
+			console.log("sende: " + id);
+		}
+
+		function clearText() {
+			var output = document.getElementById("output")
+		  	while (output.hasChildNodes()) {
+        		output.removeChild(output.firstChild);
+    		}
 		}
 
 		function writeText(message) {
-			$('#output').append('<p>' + message + '</p>');
+			var p = document.createElement("p");
+			var text = document.createTextNode(message);
+			p.appendChild(text);
+			document.getElementById("output").appendChild(p);
 		}
 
 		var websocket = new WebSocket("ws://localhost:8080/websockets/spende");
 		websocket.onopen = function(event) {
-			writeText("Verbunden");
+			writeText("Verbunden. Bitte wählen Sie eine Aktion.");
 		};
 		websocket.onmessage = function(event) {
-			writeText("Empfangen: " + event.data);
+			writeText(event.data);
 		};
 		websocket.onerror = function(event) {
 			writeText('<span style="color: red;">Fehler:</span> ' + event.data);
 		};
 	</script>
 
-	<h2>Spenden Monitor</h2>
-	<br></br>
-	<div id="output"></div>
-	<form action="">
-		<input id="email" type="text"> <input onclick="sendSpende()"
-			value="Spenden" type="button">
-	</form>
+	<div id="container">
+		<div id="header">
+			<p><b>My-Aktion-Monitor</b> - Beispielanwendung für den Java EE7 Workshop</p>
+		</div>
+		<div id="content">
+			<form action="">
+				<label for="aktionId">Aktion-ID:</label>
+				<input id="aktionId" type="text"> <input onclick="setAktionId(document.getElementById('aktionId').value);"
+					value="Setzen" type="button">
+			</form>
+			<div id="output"></div>
+		</div>
+		<div id="footer">
+			<p>(C) 2012 dpunkt Verlag. APL</p>
+		</div>
+	</div>
 </body>
 </html>

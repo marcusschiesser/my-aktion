@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientFactory;
 import javax.ws.rs.client.WebTarget;
@@ -27,10 +28,16 @@ import de.dpunkt.myaktion.monitor.util.LocalHostnameVerifier;
 @WebSocket(path = "/spende", remote = SpendeRemote.class)
 public class MonitorWebSocket {
 
+	private static final String REST_SPENDE_LIST = "https://localhost:8543/my-aktion/rest/spende/list/";
+
 	private static int instanceCounter = 0;
+
+	private Long aktionId = null;
 
 	@WebSocketContext
 	public EndpointContext wsc; // Muss public sein!
+
+	private Client client;
 
 	private static MonitorWebSocket _instance = null;
 
@@ -45,6 +52,8 @@ public class MonitorWebSocket {
 		System.out.println("SpendeWebSocket instance number: "
 				+ instanceCounter);
 		_instance = this;
+		client = ClientFactory.newClient();
+		client.configuration().register(SpendeListMBR.class);
 	}
 
 	public static MonitorWebSocket getInstance() {
@@ -54,16 +63,19 @@ public class MonitorWebSocket {
 	@WebSocketOpen
 	public void init(SpendeRemote remote) {
 		System.out.println("Peer entered conversation: " + remote);
-		Client client = ClientFactory.newClient();
-		client.configuration().register(SpendeListMBR.class);
-		WebTarget target = client
-				.target("https://localhost:8543/my-aktion/rest/spende/list/11");
-		GenericType<List<Spende>> list = new GenericType<List<Spende>>() {
-		};
-		List<Spende> result = target.request(MediaType.APPLICATION_JSON).get(
-				list);
-		for (Spende spende : result) {
-			sendSpende(spende);
+		updateSpendeList(this.aktionId);
+	}
+
+	public void updateSpendeList(Long aktionId) {
+		if (aktionId != null) {
+			WebTarget target = client.target(REST_SPENDE_LIST + aktionId);
+			GenericType<List<Spende>> list = new GenericType<List<Spende>>() {
+			};
+			List<Spende> result = target.request(MediaType.APPLICATION_JSON)
+					.get(list);
+			for (Spende spende : result) {
+				sendSpende(spende);
+			}
 		}
 	}
 
@@ -74,8 +86,6 @@ public class MonitorWebSocket {
 
 	@SuppressWarnings("rawtypes")
 	public void sendSpende(Spende spende) {
-		if (wsc == null)
-			System.out.println("wsc == null");
 		// Alle Browser informieren:
 		Set<Conversation> conversations = wsc.getConversations();
 		for (Conversation con : conversations) {
@@ -92,7 +102,14 @@ public class MonitorWebSocket {
 	}
 
 	@WebSocketMessage
-	public String echo(String message) {
-		return message + " (vom Server)";
+	public String setAktionId(Long aktionId) {
+		try {
+			updateSpendeList(aktionId);
+			this.aktionId = aktionId;
+			return "Aktion geändert zu: " + aktionId;
+		} catch (NotFoundException e) {
+			return "Die Aktion mit der ID: " + aktionId
+					+ " ist nicht verfügbar";
+		}
 	}
 }
