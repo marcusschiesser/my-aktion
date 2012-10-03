@@ -26,6 +26,7 @@ public interface SpendeDelegator {
 
     /**
      * 
+     * @param arg1
      * @param arg0
      */
     @WebMethod
@@ -33,6 +34,8 @@ public interface SpendeDelegator {
     @ResponseWrapper(localName = "receiveSpendeResponse", targetNamespace = "http://ws.monitor.myaktion.dpunkt.de/", className = "de.dpunkt.myaktion.monitor.ws.ReceiveSpendeResponse")
     public void receiveSpende(
         @WebParam(name = "arg0", targetNamespace = "")
-        Spende arg0);
+        Long arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        Spende arg1);
 
 }

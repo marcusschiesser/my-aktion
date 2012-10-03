@@ -18,7 +18,8 @@ import de.dpunkt.myaktion.model.Spende;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="arg0" type="{http://ws.monitor.myaktion.dpunkt.de/}spende" minOccurs="0"/>
+ *         &lt;element name="arg0" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
+ *         &lt;element name="arg1" type="{http://ws.monitor.myaktion.dpunkt.de/}spende" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,21 +30,23 @@ import de.dpunkt.myaktion.model.Spende;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "receiveSpende", propOrder = {
-    "arg0"
+    "arg0",
+    "arg1"
 })
 public class ReceiveSpende {
 
-    protected Spende arg0;
+    protected Long arg0;
+    protected Spende arg1;
 
     /**
      * Gets the value of the arg0 property.
      * 
      * @return
      *     possible object is
-     *     {@link Spende }
+     *     {@link Long }
      *     
      */
-    public Spende getArg0() {
+    public Long getArg0() {
         return arg0;
     }
 
@@ -52,11 +55,35 @@ public class ReceiveSpende {
      * 
      * @param value
      *     allowed object is
+     *     {@link Long }
+     *     
+     */
+    public void setArg0(Long value) {
+        this.arg0 = value;
+    }
+
+    /**
+     * Gets the value of the arg1 property.
+     * 
+     * @return
+     *     possible object is
      *     {@link Spende }
      *     
      */
-    public void setArg0(Spende value) {
-        this.arg0 = value;
+    public Spende getArg1() {
+        return arg1;
+    }
+
+    /**
+     * Sets the value of the arg1 property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Spende }
+     *     
+     */
+    public void setArg1(Spende value) {
+        this.arg1 = value;
     }
 
 }

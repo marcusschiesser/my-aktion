@@ -2,6 +2,7 @@ package de.dpunkt.myaktion.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.security.PermitAll;
@@ -55,9 +56,9 @@ public class SpendeServiceBean implements SpendeService {
 		// Spende an Glassfish über JAX-WS senden
 		try {
 			SpendeDelegatorService delegatorService = new SpendeDelegatorService();
-			delegatorService.getSpendeDelegatorPort().receiveSpende(spende);
+			delegatorService.getSpendeDelegatorPort().receiveSpende(aktionId, spende);
 		} catch(Exception e) {
-			logger.severe("Spende konnte nicht an Glassfish weitergeleitet werden. Läuft der Glassfish?");
+			logger.log(Level.SEVERE, "Spende konnte nicht an Glassfish weitergeleitet werden. Läuft der Glassfish?", e);
 		}
 		// Spende in lokaler Datenbank hinzufügen
 		Aktion managedAktion = entityManager.find(Aktion.class, aktionId);

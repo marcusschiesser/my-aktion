@@ -37,19 +37,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ReceiveSpende }
-     * 
-     */
-    public ReceiveSpende createReceiveSpende() {
-        return new ReceiveSpende();
-    }
-
-    /**
      * Create an instance of {@link ReceiveSpendeResponse }
      * 
      */
     public ReceiveSpendeResponse createReceiveSpendeResponse() {
         return new ReceiveSpendeResponse();
+    }
+
+    /**
+     * Create an instance of {@link ReceiveSpende }
+     * 
+     */
+    public ReceiveSpende createReceiveSpende() {
+        return new ReceiveSpende();
     }
 
     /**

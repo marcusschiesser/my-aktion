@@ -9,9 +9,14 @@
 <body>
 	<script>
 		function setAktionId(id) {
-			clearText();
-			websocket.send(id);
-			console.log("sende: " + id);
+			if(id.match(/^\d+$/)!=null) {
+				// Eingabe ist eine Zahl
+				clearText();
+				websocket.send(id);
+				console.log("sende: " + id);
+			} else {
+				writeError("Es handelt sich nicht um eine gültige Aktion-ID. Bitte Eingabe wiederholen.");
+			}
 		}
 
 		function clearText() {
@@ -21,11 +26,16 @@
     		}
 		}
 
-		function writeText(message) {
+		function writeText(message, pClass) {
 			var p = document.createElement("p");
+			p.setAttribute('class', pClass);
 			var text = document.createTextNode(message);
 			p.appendChild(text);
 			document.getElementById("output").appendChild(p);
+		}
+
+		function writeError(message) {
+			writeText(message, 'error');
 		}
 
 		var websocket = new WebSocket("ws://localhost:8080/websockets/spende");
@@ -36,7 +46,7 @@
 			writeText(event.data);
 		};
 		websocket.onerror = function(event) {
-			writeText('<span style="color: red;">Fehler:</span> ' + event.data);
+			writeError(event.data);
 		};
 	</script>
 

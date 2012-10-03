@@ -9,7 +9,7 @@ import de.dpunkt.myaktion.monitor.MonitorWebSocket;
 @WebService
 public class SpendeDelegator {
 	@WebMethod
-	public void receiveSpende(Spende spende) {
-		MonitorWebSocket.getInstance().sendSpende(spende);
+	public void receiveSpende(Long aktionId, Spende spende) {
+		MonitorWebSocket.getInstance().informClients(spende, aktionId);
 	}
 }
