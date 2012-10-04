@@ -3,9 +3,7 @@ package de.dpunkt.myaktion.monitor;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,6 +16,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
+import org.glassfish.websocket.api.Conversation;
 import org.glassfish.websocket.api.ConversionException;
 import org.glassfish.websocket.api.EndpointContext;
 import org.glassfish.websocket.api.annotations.WebSocket;
@@ -35,6 +34,8 @@ public class MonitorWebSocket {
 
 	private static final String REST_SPENDE_LIST = "https://localhost:8543/my-aktion/rest/spende/list/";
 
+	private static final Object AKTION_ID = "AktionId";
+
 	private static int instanceCounter = 0;
 	private static MonitorWebSocket _instance = null;
 
@@ -42,7 +43,6 @@ public class MonitorWebSocket {
 	public EndpointContext wsc; // Muss public sein!
 
 	private Client restClient;
-	private Map<SpendeRemote, Long> sessionMap;
 	private Logger logger = Logger.getLogger(MonitorWebSocket.class.getName());
 
 	public MonitorWebSocket() {
@@ -50,7 +50,6 @@ public class MonitorWebSocket {
 		System.out.println("SpendeWebSocket instance number: "
 				+ instanceCounter);
 		_instance = this;
-		sessionMap = new ConcurrentHashMap<>();
 		restClient = ClientFactory.newClient();
 		restClient.configuration().register(SpendeListMBR.class);
 		// erlaubt ausschliesslich localhost fuer SSL
@@ -67,6 +66,7 @@ public class MonitorWebSocket {
 		logger.info("Client hat sich verbunden: " + remote);
 	}
 
+	@SuppressWarnings("unchecked")
 	@WebSocketMessage
 	public String setAktionId(Long aktionId, SpendeRemote client) {
 		// Pre-Condition: aktionId!=null, da die eingehende Nachricht
@@ -75,17 +75,15 @@ public class MonitorWebSocket {
 		try {
 			result = getSpendeList(aktionId);
 		} catch (NotFoundException e) {
-			sessionMap.remove(client);
 			return "Die Aktion mit der ID: " + aktionId
 					+ " ist nicht verfügbar";
 		} catch (WebApplicationException e) {
-			sessionMap.remove(client);
 			logger.log(Level.SEVERE, "Die Spendenliste für Aktion mit ID: " + aktionId + " konnte nicht abgerufen werden. Läuft der JBoss?", e);
 			return "Fehler beim Abruf der initialen Spendenliste."; 
 		}
 		// Die Spendenliste wurde erfolgreich vom Server abgerufen,
 		// daher kann der Client für die ausgewählte Aktion registriert werden
-		sessionMap.put(client, aktionId);
+		client.getConversation().getProperties().put(AKTION_ID, aktionId);
 		// Die Spendenliste an den Client senden
 		try {
 			for (Spende spende : result) {
@@ -98,7 +96,16 @@ public class MonitorWebSocket {
 		return "Aktion geändert zu: " + aktionId;
 	}
 
-	public List<Spende> getSpendeList(Long aktionId) throws NotFoundException {
+	/**
+	 * Gibt die Liste aller Spenden zu der Aktion mit der angegebenen ID zurück.
+	 * TODO: In Klasse auslagern und mit JCache cachen
+	 * 
+	 * @param aktionId
+	 * @return
+	 * @throws NotFoundException
+	 * @throws WebApplicationException
+	 */
+	public List<Spende> getSpendeList(long aktionId) throws NotFoundException, WebApplicationException {
 		WebTarget target = restClient.target(REST_SPENDE_LIST + aktionId);
 		GenericType<List<Spende>> list = new GenericType<List<Spende>>() {
 		};
@@ -110,14 +117,17 @@ public class MonitorWebSocket {
 	@WebSocketClose
 	public void destroy(SpendeRemote client) {
 		logger.info("Client hat Verbindung getrennt: " + client);
-		sessionMap.remove(client);
 	}
 
-	public void informClients(Spende spende, Long aktionId) {
+	public void informClients(Spende spende, long aktionId) {
 		// Spende an alle Clients senden, die für diese Aktion registriert sind
-		Set<SpendeRemote> clients = sessionMap.keySet();
-		for (SpendeRemote client : clients) {
-			if (sessionMap.get(client).equals(aktionId)) {
+		@SuppressWarnings("rawtypes")
+		Set<Conversation> conversations = wsc.getConversations();
+		for (Conversation<SpendeRemote> conversation : conversations) {
+			// Aktion ID besorgen, für die der aktuelle Client registriert ist
+			Long clientAktionId = (Long) conversation.getProperties().get(AKTION_ID);
+			if (aktionId == clientAktionId) {
+				SpendeRemote client = conversation.getPeer();
 				try {
 					client.sendMessage(spende);
 				} catch (IOException | ConversionException e) {
