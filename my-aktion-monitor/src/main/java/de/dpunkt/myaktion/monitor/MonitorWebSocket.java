@@ -7,14 +7,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientFactory;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
 
 import org.glassfish.websocket.api.Conversation;
 import org.glassfish.websocket.api.ConversionException;
@@ -26,35 +20,30 @@ import org.glassfish.websocket.api.annotations.WebSocketMessage;
 import org.glassfish.websocket.api.annotations.WebSocketOpen;
 
 import de.dpunkt.myaktion.model.Spende;
-import de.dpunkt.myaktion.model.SpendeListMBR;
-import de.dpunkt.myaktion.monitor.util.LocalHostnameVerifier;
 
 @WebSocket(path = "/spende", remote = SpendeRemote.class)
 public class MonitorWebSocket {
 
-	private static final String REST_SPENDE_LIST = "https://localhost:8543/my-aktion/rest/spende/list/";
+	private static final String AKTION_ID = "AktionId";
 
-	private static final Object AKTION_ID = "AktionId";
-
+	// TODO: können entfernt werden, sobald CDI geht
 	private static int instanceCounter = 0;
 	private static MonitorWebSocket _instance = null;
 
 	@WebSocketContext
 	public EndpointContext wsc; // Muss public sein!
 
-	private Client restClient;
 	private Logger logger = Logger.getLogger(MonitorWebSocket.class.getName());
+	
+	// TODO: Mit @Inject injizieren (geht aktuell nicht)
+	private SpendeListProvider spendeListProvider;
 
 	public MonitorWebSocket() {
 		instanceCounter++;
-		System.out.println("SpendeWebSocket instance number: "
+		logger.info("SpendeWebSocket instance number: "
 				+ instanceCounter);
 		_instance = this;
-		restClient = ClientFactory.newClient();
-		restClient.configuration().register(SpendeListMBR.class);
-		// erlaubt ausschliesslich localhost fuer SSL
-		HttpsURLConnection
-				.setDefaultHostnameVerifier(new LocalHostnameVerifier());
+		spendeListProvider = new SpendeListProvider();
 	}
 
 	public static MonitorWebSocket getInstance() {
@@ -66,6 +55,11 @@ public class MonitorWebSocket {
 		logger.info("Client hat sich verbunden: " + remote);
 	}
 
+	@WebSocketClose
+	public void destroy(SpendeRemote client) {
+		logger.info("Client hat Verbindung getrennt: " + client);
+	}
+
 	@SuppressWarnings("unchecked")
 	@WebSocketMessage
 	public String setAktionId(Long aktionId, SpendeRemote client) {
@@ -73,7 +67,7 @@ public class MonitorWebSocket {
 		// nach Typ an eine Methode weitergeleitet wird
 		List<Spende> result = new LinkedList<>();
 		try {
-			result = getSpendeList(aktionId);
+			result = spendeListProvider.getSpendeList(aktionId);
 		} catch (NotFoundException e) {
 			return "Die Aktion mit der ID: " + aktionId
 					+ " ist nicht verfügbar";
@@ -96,29 +90,7 @@ public class MonitorWebSocket {
 		return "Aktion geändert zu: " + aktionId;
 	}
 
-	/**
-	 * Gibt die Liste aller Spenden zu der Aktion mit der angegebenen ID zurück.
-	 * TODO: In Klasse auslagern und mit JCache cachen
-	 * 
-	 * @param aktionId
-	 * @return
-	 * @throws NotFoundException
-	 * @throws WebApplicationException
-	 */
-	public List<Spende> getSpendeList(long aktionId) throws NotFoundException, WebApplicationException {
-		WebTarget target = restClient.target(REST_SPENDE_LIST + aktionId);
-		GenericType<List<Spende>> list = new GenericType<List<Spende>>() {
-		};
-		List<Spende> result = target.request(MediaType.APPLICATION_JSON).get(
-				list);
-		return result;
-	}
-
-	@WebSocketClose
-	public void destroy(SpendeRemote client) {
-		logger.info("Client hat Verbindung getrennt: " + client);
-	}
-
+	// TODO: in @Observes Methode umwandeln (geht aktuell nicht)
 	public void informClients(Spende spende, long aktionId) {
 		// Spende an alle Clients senden, die für diese Aktion registriert sind
 		@SuppressWarnings("rawtypes")

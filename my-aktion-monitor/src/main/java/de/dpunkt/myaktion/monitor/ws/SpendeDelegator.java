@@ -10,6 +10,7 @@ import de.dpunkt.myaktion.monitor.MonitorWebSocket;
 public class SpendeDelegator {
 	@WebMethod
 	public void receiveSpende(Long aktionId, Spende spende) {
+		// TODO: Stattdessen ein CDI-Event senden (geht aktuell nicht)
 		MonitorWebSocket.getInstance().informClients(spende, aktionId);
 	}
 }
