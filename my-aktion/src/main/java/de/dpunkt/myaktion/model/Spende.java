@@ -13,13 +13,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @NamedQueries({
-	@NamedQuery(name=Spende.findWorkInProcess,query="SELECT s FROM Spende s WHERE s.status = :status")
+	@NamedQuery(name=Spende.findByStatus,query="SELECT s FROM Spende s WHERE s.status = :status")
 })
 @Entity
 public class Spende implements Serializable {
 	private static final long serialVersionUID = -305029412912522665L;
 
-	public static final String findWorkInProcess = "Spende.findWorkInProcess";
+	public static final String findByStatus = "Spende.findWorkInProcess";
 
 	// Der NumberConverter konvertiert leere Strings in einen Null-Wert, daher
 	// kommen bei Nicht-Angabe Null-Werte von Faces zurück - für diese wird daher ein Message-Wert benötigt.

@@ -12,7 +12,7 @@ public class SchedulerBean {
 	@Inject
 	private SpendeService spendeService;
 	
-    @Schedule(minute="*/5", hour="*", persistent=false)
+    @Schedule(minute="*/5", hour="*")
     /**
      * Ruft alle 5 Minuten die Methode transferSpende des SpendeService auf
      */

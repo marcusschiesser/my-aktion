@@ -69,7 +69,7 @@ public class SpendeServiceBean implements SpendeService {
 	@PermitAll
     public void transferSpende(){
     	logger.info("Zu bearbeitende Spenden werden überwiesen.");
-    	TypedQuery<Spende> query = entityManager.createNamedQuery(Spende.findWorkInProcess, Spende.class);
+    	TypedQuery<Spende> query = entityManager.createNamedQuery(Spende.findByStatus, Spende.class);
     	query.setParameter("status", Status.IN_BEARBEITUNG);
 		List<Spende> spenden = query.getResultList();
 		int count = 0;
