@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.event.Observes;
+import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -16,7 +17,6 @@ import de.dpunkt.myaktion.util.Events.Deleted;
 import de.dpunkt.myaktion.util.Events.Updated;
 
 @RequestScoped
-@Named
 public class AktionListProducer implements Serializable {
 	
 	private static final long serialVersionUID = -182866064791747156L;
@@ -31,6 +31,8 @@ public class AktionListProducer implements Serializable {
 		aktionen = aktionService.getAllAktionen();
 	}
 
+	@Produces
+	@Named
 	public List<Aktion> getAktionen() {
 		return aktionen;
 	}

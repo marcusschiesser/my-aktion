@@ -9,7 +9,7 @@
 		<h1>Meine Aktionen</h1>
 
 		<h:form>
-			<p:dataTable value="#{aktionListProducer.aktionen}" var="aktion">
+			<p:dataTable value="#{aktionen}" var="aktion">
 				<p:column>
 					<p:commandButton onclick="confirmation.show()" actionListener="#{aktionListController.doDeleteAktion(aktion)}" icon="ui-icon-close" />
 				</p:column>
