@@ -2,8 +2,6 @@ package de.dpunkt.myaktion.test;
 
 import java.util.List;
 
-import javax.enterprise.inject.Produces;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -53,11 +51,6 @@ public class SpendeListTest {
 
 	@Inject
 	private AktionService aktionService;
-
-	@Produces
-	public FacesContext produceFacesContext() {
-		return FacesContext.getCurrentInstance();
-	}
 
 	@Test
 	public void testAddSpende() throws Exception {
