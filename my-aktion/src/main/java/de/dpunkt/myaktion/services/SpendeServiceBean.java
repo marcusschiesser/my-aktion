@@ -56,7 +56,7 @@ public class SpendeServiceBean implements SpendeService {
 		// Spende an Glassfish über JAX-WS senden
 		try {
 			SpendeDelegatorService delegatorService = new SpendeDelegatorService();
-			delegatorService.getSpendeDelegatorPort().receiveSpende(aktionId, spende);
+			delegatorService.getSpendeDelegatorPort().sendSpende(aktionId, spende);
 		} catch(Exception e) {
 			logger.log(Level.SEVERE, "Spende konnte nicht an Glassfish weitergeleitet werden. Läuft der Glassfish?", e);
 		}

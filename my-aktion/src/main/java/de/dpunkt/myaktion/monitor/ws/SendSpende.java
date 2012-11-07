@@ -9,12 +9,12 @@ import de.dpunkt.myaktion.model.Spende;
 
 
 /**
- * <p>Java class for receiveSpende complex type.
+ * <p>Java class for sendSpende complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="receiveSpende">
+ * &lt;complexType name="sendSpende">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
@@ -29,11 +29,11 @@ import de.dpunkt.myaktion.model.Spende;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "receiveSpende", propOrder = {
+@XmlType(name = "sendSpende", propOrder = {
     "arg0",
     "arg1"
 })
-public class ReceiveSpende {
+public class SendSpende {
 
     protected Long arg0;
     protected Spende arg1;

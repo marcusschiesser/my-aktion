@@ -26,8 +26,8 @@ import de.dpunkt.myaktion.model.Spende;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _ReceiveSpende_QNAME = new QName("http://ws.monitor.myaktion.dpunkt.de/", "receiveSpende");
-    private final static QName _ReceiveSpendeResponse_QNAME = new QName("http://ws.monitor.myaktion.dpunkt.de/", "receiveSpendeResponse");
+    private final static QName _SendSpende_QNAME = new QName("http://ws.monitor.myaktion.dpunkt.de/", "sendSpende");
+    private final static QName _SendSpendeResponse_QNAME = new QName("http://ws.monitor.myaktion.dpunkt.de/", "sendSpendeResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: de.dpunkt.myaktion.monitor.ws
@@ -37,19 +37,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ReceiveSpendeResponse }
+     * Create an instance of {@link SendSpendeResponse }
      * 
      */
-    public ReceiveSpendeResponse createReceiveSpendeResponse() {
-        return new ReceiveSpendeResponse();
+    public SendSpendeResponse createSendSpendeResponse() {
+        return new SendSpendeResponse();
     }
 
     /**
-     * Create an instance of {@link ReceiveSpende }
+     * Create an instance of {@link SendSpende }
      * 
      */
-    public ReceiveSpende createReceiveSpende() {
-        return new ReceiveSpende();
+    public SendSpende createSendSpende() {
+        return new SendSpende();
     }
 
     /**
@@ -61,21 +61,21 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link ReceiveSpende }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link SendSpende }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://ws.monitor.myaktion.dpunkt.de/", name = "receiveSpende")
-    public JAXBElement<ReceiveSpende> createReceiveSpende(ReceiveSpende value) {
-        return new JAXBElement<ReceiveSpende>(_ReceiveSpende_QNAME, ReceiveSpende.class, null, value);
+    @XmlElementDecl(namespace = "http://ws.monitor.myaktion.dpunkt.de/", name = "sendSpende")
+    public JAXBElement<SendSpende> createSendSpende(SendSpende value) {
+        return new JAXBElement<SendSpende>(_SendSpende_QNAME, SendSpende.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link ReceiveSpendeResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link SendSpendeResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://ws.monitor.myaktion.dpunkt.de/", name = "receiveSpendeResponse")
-    public JAXBElement<ReceiveSpendeResponse> createReceiveSpendeResponse(ReceiveSpendeResponse value) {
-        return new JAXBElement<ReceiveSpendeResponse>(_ReceiveSpendeResponse_QNAME, ReceiveSpendeResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://ws.monitor.myaktion.dpunkt.de/", name = "sendSpendeResponse")
+    public JAXBElement<SendSpendeResponse> createSendSpendeResponse(SendSpendeResponse value) {
+        return new JAXBElement<SendSpendeResponse>(_SendSpendeResponse_QNAME, SendSpendeResponse.class, null, value);
     }
 
 }
