@@ -1,2 +1,2 @@
-insert into Organisator (email, vorname, nachname, passwort) values ('max@mustermann.de', 'Max', 'Mustermann', 'secret');
-insert into Organisator (email, vorname, nachname, passwort) values ('martha@mustermann.de', 'Martha', 'Mustermann', 'secret');
+insert into Organisator (email, vorname, nachname, passwort) values ('max@mustermann.de', 'Max', 'Mustermann', hash('SHA256', stringtoutf8('secret'), 1));
+insert into Organisator (email, vorname, nachname, passwort) values ('martha@mustermann.de', 'Martha', 'Mustermann', hash('SHA256', stringtoutf8('secret'), 1));
