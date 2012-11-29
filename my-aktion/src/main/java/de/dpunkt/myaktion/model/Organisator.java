@@ -25,7 +25,6 @@ public class Organisator {
 	@Pattern(regexp=".+@.+", message="Bitte eine valide E-Mail-Adresse angeben.")
 	private String email;
 	@NotNull
-	@Size(min=6, max=20, message="Ein Passwort muss min. 6 und darf max. 20 Zeichen lang sein.")
 	private String passwort;
 
 	public String getVorname() {
