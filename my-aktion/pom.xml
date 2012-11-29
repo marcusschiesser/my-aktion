@@ -166,6 +166,12 @@
 			<scope>provided</scope>
 		</dependency>
 
+				<dependency>
+					<groupId>org.primefaces</groupId>
+					<artifactId>primefaces</artifactId>
+					<version>3.2</version>
+				</dependency>
+
 	</dependencies>
 
 	<build>
@@ -234,13 +240,6 @@
 					<layout>default</layout>
 				</repository>
 			</repositories>
-			<dependencies>
-				<dependency>
-					<groupId>org.primefaces</groupId>
-					<artifactId>primefaces</artifactId>
-					<version>3.2</version>
-				</dependency>
-			</dependencies>
 		</profile>
 
 		<profile>
@@ -261,6 +260,12 @@
 					<snapshots>
 						<enabled>false</enabled>
 					</snapshots>
+				</repository>
+				<repository>
+					<id>prime-repo</id>
+					<name>PrimeFaces Maven Repository</name>
+					<url>http://repository.primefaces.org</url>
+					<layout>default</layout>
 				</repository>
 			</repositories>
 
@@ -312,6 +317,12 @@
 						<enabled>false</enabled>
 					</snapshots>
 				</repository>
+				<repository>
+					<id>prime-repo</id>
+					<name>PrimeFaces Maven Repository</name>
+					<url>http://repository.primefaces.org</url>
+					<layout>default</layout>
+				</repository>
 			</repositories>
 
 			<pluginRepositories>
@@ -362,6 +373,14 @@
 					</plugin>
 				</plugins>
 			</build>
+			<repositories>
+				<repository>
+					<id>prime-repo</id>
+					<name>PrimeFaces Maven Repository</name>
+					<url>http://repository.primefaces.org</url>
+					<layout>default</layout>
+				</repository>
+			</repositories>
 		</profile>
 
 	</profiles>
