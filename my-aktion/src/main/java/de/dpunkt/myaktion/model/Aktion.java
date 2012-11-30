@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -44,9 +45,8 @@ public class Aktion {
 	@AttributeOverrides({ @AttributeOverride(name = "name", column = @Column(name = "kontoName")) })
 	@Embedded
 	private Konto konto;
-	// Spenden müssen immer manuell persistiert werden
-	// Alternative: @CascadeType.ALL bei dieser Relation
-	@OneToMany(mappedBy = "aktion")
+
+	@OneToMany(mappedBy = "aktion", cascade = CascadeType.REMOVE)
 	private List<Spende> spenden;
 	@ManyToOne
 	private Organisator organisator;
