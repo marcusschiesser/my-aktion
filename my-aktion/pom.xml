@@ -7,8 +7,8 @@
 	<artifactId>my-aktion</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>Java EE 6 webapp project</name>
-	<description>A starter Java EE 6 webapp project for use on JBoss AS 7 / EAP 6, generated from the jboss-javaee6-webapp archetype</description>
+	<name>MyAktion – Spendenaktionen mit Java EE 7</name>
+	<description>MyAktion ermöglicht die Abwicklung	gemeinnütziger Spendenaktionen über das Web.</description>
 
 	<properties>
 		<!-- Explicitly declaring the source encoding eliminates the following 
@@ -142,10 +142,22 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.jboss.spec.javax.faces</groupId>
-			<artifactId>jboss-jsf-api_2.1_spec</artifactId>
-			<version>2.0.0.Final</version>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>2.2.0-m08</version>
 			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>3.4.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.2</version>
 		</dependency>
 
 	</dependencies>
@@ -213,13 +225,6 @@
 					<layout>default</layout>
 				</repository>
 			</repositories>
-			<dependencies>
-				<dependency>
-					<groupId>org.primefaces</groupId>
-					<artifactId>primefaces</artifactId>
-					<version>3.2</version>
-				</dependency>
-			</dependencies>
 		</profile>
 
 		<profile>
@@ -240,6 +245,12 @@
 					<snapshots>
 						<enabled>false</enabled>
 					</snapshots>
+				</repository>
+				<repository>
+					<id>prime-repo</id>
+					<name>PrimeFaces Maven Repository</name>
+					<url>http://repository.primefaces.org</url>
+					<layout>default</layout>
 				</repository>
 			</repositories>
 
@@ -290,6 +301,12 @@
 					<snapshots>
 						<enabled>false</enabled>
 					</snapshots>
+				</repository>
+				<repository>
+					<id>prime-repo</id>
+					<name>PrimeFaces Maven Repository</name>
+					<url>http://repository.primefaces.org</url>
+					<layout>default</layout>
 				</repository>
 			</repositories>
 
