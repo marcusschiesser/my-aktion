@@ -3,7 +3,7 @@ package de.dpunkt.myaktion.controller;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,16 +18,15 @@ public class SpendeFormEditController implements Serializable {
 	private String textColor = "000000";
 	private String bgColor = "ffffff";
 	private Aktion aktion;
-
+	
 	public String doOk() {
 		return Pages.AKTION_LIST;
 	}
 	
+	@Inject
+	private HttpServletRequest req;
+	
 	private String getAppUrl() {
-		HttpServletRequest req =
-			(HttpServletRequest)FacesContext.getCurrentInstance()
-				.getExternalContext().getRequest();
-
 		String scheme = req.getScheme();             
 		String serverName = req.getServerName();     
 		int serverPort = req.getServerPort();        
