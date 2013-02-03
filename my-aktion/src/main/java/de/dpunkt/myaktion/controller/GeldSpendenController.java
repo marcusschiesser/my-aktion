@@ -68,9 +68,9 @@ public class GeldSpendenController implements Serializable {
 	public String doSpende() {
 		logger.info(spende.getSpenderName() + " hat " + spende.getBetrag()
 				+ " Euro gespendet.");
-		facesContext.addMessage(null, new FacesMessage(
-				FacesMessage.SEVERITY_INFO, "Vielen Dank für die Spende, "
-						+ spende.getSpenderName() + "!", null));
+		FacesMessage facesMessage = new FacesMessage(
+				FacesMessage.SEVERITY_INFO, "Vielen Dank für die Spende", null);
+		facesContext.addMessage(null, facesMessage);
 		init();
 		return Pages.GELD_SPENDEN;
 	}
