@@ -205,7 +205,7 @@
 				<artifactId>jboss-as-maven-plugin</artifactId>
 				<version>7.1.1.Final</version>
 				<configuration>
-					<port>10099</port>
+					<port>9999</port>
 				</configuration>
 			</plugin>
 		</plugins>
