@@ -1,6 +1,5 @@
 package de.dpunkt.myaktion.data;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -17,10 +16,8 @@ import de.dpunkt.myaktion.util.Events.Deleted;
 import de.dpunkt.myaktion.util.Events.Updated;
 
 @RequestScoped
-public class AktionListProducer implements Serializable {
+public class AktionListProducer {
 	
-	private static final long serialVersionUID = -182866064791747156L;
-
 	private List<Aktion> aktionen;
 	
 	@Inject

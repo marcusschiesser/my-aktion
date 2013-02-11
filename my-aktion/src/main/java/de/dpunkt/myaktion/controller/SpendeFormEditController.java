@@ -35,7 +35,8 @@ public class SpendeFormEditController implements Serializable {
 	}
 	
 	public String getUrl() {
-		return getAppUrl()+"/"+Pages.GELD_SPENDEN+".jsf"+"?bgColor=" + bgColor + "&textColor=" + textColor + "&aktionId=" + aktion.getId();
+		return getAppUrl()+"/"+Pages.GELD_SPENDEN+".jsf" + "?bgColor=" + bgColor
+				 + "&textColor=" + textColor + "&aktionId=" + aktion.getId();
 	}
 
 	public String getTextColor() {

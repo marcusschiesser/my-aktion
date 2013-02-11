@@ -11,7 +11,6 @@ import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 
 public class Resources {
-	@SuppressWarnings("unused")
 	@Produces
 	@PersistenceContext
 	private EntityManager em;
