@@ -2,11 +2,11 @@ package de.dpunkt.myaktion.monitor;
 
 import java.text.NumberFormat;
 
-import org.glassfish.websocket.api.TextEncoder;
+import javax.websocket.Encoder;
 
 import de.dpunkt.myaktion.model.Spende;
 
-public class SpendeEncoder implements TextEncoder<Spende> {
+public class SpendeEncoder extends Encoder.Adapter implements Encoder.Text<Spende> {
 
 	@Override
 	public String encode(Spende spende) {
