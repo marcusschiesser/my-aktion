@@ -6,7 +6,7 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientFactory;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
@@ -29,8 +29,8 @@ public class SpendeListProvider {
 	private Client restClient;
 	
 	public SpendeListProvider() {
-		restClient = ClientFactory.newClient();
-		restClient.configuration().register(SpendeListMBR.class);
+		restClient = ClientBuilder.newClient();
+		restClient.getConfiguration().getClasses().add(SpendeListMBR.class);
 		// erlaubt ausschliesslich localhost fuer SSL
 		HttpsURLConnection
 				.setDefaultHostnameVerifier(new LocalHostnameVerifier());
