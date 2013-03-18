@@ -38,7 +38,7 @@
 			writeText(message, 'error');
 		}
 
-		var websocket = new WebSocket("ws://" + window.location.host + "/websockets/spende");
+		var websocket = new WebSocket("ws://" + document.location.host + document.location.pathname + "spende");
 		websocket.onopen = function(event) {
 			writeText("Verbunden. Bitte wählen Sie eine Aktion.");
 		};
