@@ -22,7 +22,7 @@ public class Organisator {
 	@Size(min=3, max=30, message="Der Nachname eines Organisators muss min. 3 und darf max. 30 Zeichen lang sein.")
 	private String nachname;
 	@Id
-	@Pattern(regexp="@", message="Bitte eine valide E-Mail-Adresse angeben.")
+	@Pattern(regexp=".+@.+", message="Bitte eine valide E-Mail-Adresse angeben.")
 	private String email;
 	@NotNull
 	@Size(min=6, max=20, message="Ein Passwort muss min. 6 und darf max. 20 Zeichen lang sein.")
