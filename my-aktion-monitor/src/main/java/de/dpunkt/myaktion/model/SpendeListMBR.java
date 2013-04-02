@@ -27,15 +27,15 @@ import javax.ws.rs.ext.Provider;
 public class SpendeListMBR implements MessageBodyReader<List<Spende>> {
 
     @Override
-    public boolean isReadable(Class<?> arg0, Type arg1, Annotation[] arg2,
-	    MediaType arg3) {
+    public boolean isReadable(Class<?> c, Type t, Annotation[] ann,
+	    MediaType mt) {
 	return true;
     }
 
     @Override
-    public List<Spende> readFrom(Class<List<Spende>> arg0, Type arg1,
-	    Annotation[] arg2, MediaType arg3,
-	    MultivaluedMap<String, String> arg4, InputStream is)
+    public List<Spende> readFrom(Class<List<Spende>> c, Type t,
+	    Annotation[] ann, MediaType mt,
+	    MultivaluedMap<String, String> mm, InputStream is)
 	    throws IOException, WebApplicationException {
 	JsonReader reader = Json.createReader(is);
 	JsonArray values = reader.readArray();
