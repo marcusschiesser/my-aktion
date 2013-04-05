@@ -39,9 +39,9 @@ public class MonitorWebSocket {
     }
 
     @OnOpen
-    public void onOpen(Session remote) {
-	logger.info("Client hat sich verbunden: " + remote);
-	sessions.add(remote);
+    public void onOpen(Session session) {
+	logger.info("Client hat sich verbunden: " + session);
+	sessions.add(session);
     }
 
     @OnClose
