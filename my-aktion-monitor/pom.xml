@@ -12,6 +12,7 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<output.dir>${env.AS_HOME}/glassfish/domains/domain_my-aktion/autodeploy</output.dir>
     </properties>
     
     <!--  
@@ -54,6 +55,7 @@
                 <version>2.3</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <outputDirectory>${output.dir}</outputDirectory>
                 </configuration>
             </plugin>
             <plugin>
