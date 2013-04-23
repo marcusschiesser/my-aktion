@@ -9,7 +9,7 @@
 <body>
 	<script>
 		function setAktionId(id) {
-			if(id.match(/^\d+$/)!=null) {
+			if(id.match(/^\d+$/)!==null) {
 				// Eingabe ist eine Zahl
 				clearText();
 				websocket.send(id);
@@ -20,7 +20,7 @@
 		}
 
 		function clearText() {
-			var output = document.getElementById("output")
+			var output = document.getElementById("output");
 		  	while (output.hasChildNodes()) {
         		output.removeChild(output.firstChild);
     		}
